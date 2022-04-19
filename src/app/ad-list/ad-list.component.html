@@ -1,1 +1,15 @@
-<p>ad-list works!</p>
+<div *ngIf="anuncios.length==0">
+    <h4>No hay anuncios</h4>
+</div>
+
+<div *ngIf="anuncios.length>0">
+    <ul *ngFor="let anuncio of pageAnuncios">
+        <li>{{anuncio.id}} | {{anuncio.referencia}} | {{anuncio.vendedor_id}} | {{anuncio.imagen}} |
+            {{anuncio.municipio_id}} | {{anuncio.cp}} | {{anuncio.precio}} | {{anuncio.tipo_id}} | {{anuncio.trato}} |
+            {{anuncio.habitaciones}} | {{anuncio.area}} | {{anuncio.descripcion}} | {{anuncio.created_at}}</li>
+    </ul>
+</div>
+
+<mat-paginator (page)="OnPageChange($event)" [length]="anuncios.length" [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selecciona">
+</mat-paginator>
