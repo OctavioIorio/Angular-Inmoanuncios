@@ -1,7 +1,7 @@
 import { IProvincia } from "./iprovincia";
 
 export interface IMunicipio {
-    municipioId: number;
-    municipioNombre: string;
-    municipioProvincia_id: IProvincia["provinciaId"];
+    id: number;
+    nombre: string;
+    provincia_id: IProvincia["id"];
 }

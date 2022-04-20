@@ -1,5 +1,5 @@
 export interface IUsuario {
-    usuarioId: number;
-    usuarioNickname: string;
-    usuarioPassword: string;
+    id: number;
+    nickname: string;
+    password: string;
 }

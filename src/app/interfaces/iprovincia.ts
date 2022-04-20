@@ -1,4 +1,4 @@
 export interface IProvincia {
-    provinciaId: number;
-    provinciaNombre: string;
+    id: number;
+    nombre: string;
 }

@@ -1,10 +1,10 @@
 import { IUsuario } from "./iusuario";
 
 export interface IGeneral {
-    generalId: IUsuario["usuarioId"];
-    generalNombre: string;
-    generalApellidos: string;
-    generalEmail: string;
-    generalTelefono: number;
-    generalImagen: string;
+    id: IUsuario["id"];
+    nombre: string;
+    apellidos: string;
+    email: string;
+    telefono: number;
+    imagen: string;
 }

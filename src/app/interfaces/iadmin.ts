@@ -1,5 +1,5 @@
 import { IUsuario } from "./iusuario";
 
 export interface IAdmin {
-    adminId: IUsuario["usuarioId"];
+    id: IUsuario["id"];
 }

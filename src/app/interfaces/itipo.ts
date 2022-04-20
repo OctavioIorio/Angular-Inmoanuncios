@@ -1,4 +1,4 @@
 export interface ITipo {
-    tipoId: number;
-    tipoNombre: string;
+    id: number;
+    nombre: string;
 }
