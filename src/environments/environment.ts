@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://localhost/daw/m14/Inmoanuncios/API-Inmoanuncios/API-Inmoanuncios/public/index.php' || 'http://localhost/2021-2022/M14/proyecto/API-Inmoanuncios/API-Inmoanuncios/public/index.php'
 };
 
 /*

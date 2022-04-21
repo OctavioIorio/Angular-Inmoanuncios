@@ -1,1 +1,51 @@
-<p>ad-list works!</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-4 border d-flex justify-content-center">
+            <div class="container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select [(value)]="selected">
+                      <mat-option>None</mat-option>
+                      <mat-option value="option1">Option 1</mat-option>
+                      <mat-option value="option2">Option 2</mat-option>
+                      <mat-option value="option3">Option 3</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div *ngIf="anuncios.length==0" class="d-flex align-items-center justify-content-center">
+                <span class="display-3">No hay anuncios</span>
+                <img class="w-25" src="assets/sad.png" alt="sad">
+            </div>
+            <div *ngIf="anuncios.length>0">
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <div class="col" *ngFor="let anuncio of pageAnuncios">
+                        <div class="card">
+                            <img src="{{anuncio.imagen}}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">{{anuncio.tipo.nombre}} en {{anuncio.trato}}</h2>
+                                <p class="card-text">{{anuncio.cp}}, {{anuncio.municipio.nombre}}, {{anuncio.provincia.nombre}}</p>
+                                <p class="card-text">{{anuncio.precio}} €</p>
+                                <p class="card-text">{{anuncio.descripcion}}</p>
+                                <p class="card-text">{{anuncio.referencia}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <ul *ngFor="let anuncio of pageAnuncios">
+                    <li>{{anuncio.id}} | {{anuncio.referencia}} | {{anuncio.vendedor_id}} | {{anuncio.imagen}} |
+                        {{anuncio.municipio_id}} | {{anuncio.cp}} | {{anuncio.precio}} | {{anuncio.tipo_id}} |
+                        {{anuncio.trato}} |
+                        {{anuncio.habitaciones}} | {{anuncio.area}} | {{anuncio.descripcion}} | {{anuncio.created_at}}
+                    </li>
+                </ul> -->
+            </div>
+
+
+        </div>
+    </div>
+    <mat-paginator (page)="OnPageChange($event)" [length]="anuncios.length" [pageSize]="10"
+        [pageSizeOptions]="[4, 10, 20, 50, 100]" aria-label="Selecciona">
+    </mat-paginator>
+</div>
