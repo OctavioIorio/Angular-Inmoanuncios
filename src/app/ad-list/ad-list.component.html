@@ -1,31 +1,87 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-4 border d-flex justify-content-center">
-            <div class="container">
+            <div class="container pt-4 d-flex flex-column">
+                <!-- <span>Tipo de inmueble</span><br> -->
                 <mat-form-field appearance="fill">
-                    <mat-label>Select an option</mat-label>
-                    <mat-select [(value)]="selected">
-                      <mat-option>None</mat-option>
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2">Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
+                    <mat-label>Tipo de inmueble</mat-label>
+                    <mat-select [(ngModel)]="tipoSelected" [(value)]="tipoSelected">
+                        <mat-option>Todos</mat-option>
+                        <div *ngFor="let tipo of tipos">
+                            <mat-option [value]="tipo.id">{{tipo.nombre}}</mat-option>
+                        </div>
                     </mat-select>
-                  </mat-form-field>
+                </mat-form-field><br>
+
+                <span>Tipo de trato</span><br>
+                <mat-radio-group [(ngModel)]="tratoSelected" aria-label="Selecciona tipo de trato">
+                    <mat-radio-button value="">Todos</mat-radio-button>
+                    <div *ngFor="let trato of tratos">
+                        <mat-radio-button [value]="trato">{{trato}}</mat-radio-button>
+                    </div>
+                </mat-radio-group><br>
+
+                <!-- <span>Precio</span> -->
+                <div>
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="precioMin" matInput placeholder="Precio mín.">
+                        <span matSuffix>€</span>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="precioMax" matInput placeholder="Precio máx.">
+                        <span matSuffix>€</span>
+                    </mat-form-field>
+                </div>
+
+                <!-- <span>Área</span> -->
+                <div>
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="areaMin" matInput placeholder="Área mín.">
+                        <span matSuffix>m²</span>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="areaMax" matInput placeholder="Área máx.">
+                        <span matSuffix>m²</span>
+                    </mat-form-field>
+                </div>
+                <span>Habitaciones</span>
+                <!-- <section class="d-flex flex-column">
+                    <mat-checkbox>1</mat-checkbox>
+                    <mat-checkbox>2</mat-checkbox>
+                    <mat-checkbox>3</mat-checkbox>
+                    <mat-checkbox>4 o más</mat-checkbox>
+                </section> -->
+                <mat-radio-group [(ngModel)]="habitaciones" class="d-flex flex-column" aria-label="Selecciona número de habitaciones">
+                    <mat-radio-button>Todos</mat-radio-button>
+                    <mat-radio-button value="1">1</mat-radio-button>
+                    <mat-radio-button value="2">2</mat-radio-button>
+                    <mat-radio-button value="3">3</mat-radio-button>
+                    <mat-radio-button value="4">4 o más</mat-radio-button>
+                </mat-radio-group>
+
+                <!-- <span>Referencia</span><br> -->
+                <mat-form-field hintLabel="10 carácteres máximos">
+                    <input [(ngModel)]="referencia" matInput #refe placeholder="Referencia" maxlength="10">
+                    <mat-hint align="end">{{refe.value?.length || 0}}/{{refe.maxLength}}</mat-hint>
+                </mat-form-field>
             </div>
         </div>
         <div class="col-sm">
-            <div *ngIf="anuncios.length==0" class="d-flex align-items-center justify-content-center">
+            <div *ngIf="pageAnuncios.length==0"
+                class="d-flex align-items-center justify-content-center flex-columnd-sm">
                 <span class="display-3">No hay anuncios</span>
                 <img class="w-25" src="assets/sad.png" alt="sad">
             </div>
-            <div *ngIf="anuncios.length>0">
+            <div *ngIf="pageAnuncios.length>0">
                 <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col" *ngFor="let anuncio of pageAnuncios">
+                    <div class="col"
+                        *ngFor="let anuncio of pageAnuncios | adListFilter:referencia:tipoSelected:precioMin:precioMax:areaMin:areaMax:tratoSelected:habitaciones">
                         <div class="card">
                             <img src="{{anuncio.imagen}}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h2 class="card-title">{{anuncio.tipo.nombre}} en {{anuncio.trato}}</h2>
-                                <p class="card-text">{{anuncio.cp}}, {{anuncio.municipio.nombre}}, {{anuncio.provincia.nombre}}</p>
+                                <p class="card-text">{{anuncio.cp}}, {{anuncio.municipio.nombre}},
+                                    {{anuncio.provincia.nombre}}</p>
                                 <p class="card-text">{{anuncio.precio}} €</p>
                                 <p class="card-text">{{anuncio.descripcion}}</p>
                                 <p class="card-text">{{anuncio.referencia}}</p>

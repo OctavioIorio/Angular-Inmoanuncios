@@ -17,7 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatPaginatorModule} from '@angular/material/paginator';
 //     MatProgressBarModule,
 //     MatProgressSpinnerModule,
-//     MatRadioModule,
+import {MatRadioModule} from '@angular/material/radio';
 //     MatRippleModule,
 import {MatSelectModule} from '@angular/material/select';
 //     MatSidenavModule,
@@ -52,7 +52,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
          MatPaginatorModule,
 //         MatProgressBarModule,
 //         MatProgressSpinnerModule,
-//         MatRadioModule,
+         MatRadioModule,
 //         MatRippleModule,
          MatSelectModule,
 //         MatSidenavModule,
@@ -85,7 +85,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
          MatPaginatorModule,
 //         MatProgressBarModule,
 //         MatProgressSpinnerModule,
-//         MatRadioModule,
+         MatRadioModule,
 //         MatRippleModule,
          MatSelectModule,
 //         MatSidenavModule,

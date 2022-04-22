@@ -4,6 +4,7 @@ import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -11,13 +12,17 @@ import { HomeComponent } from './home/home.component';
 import { AdListComponent } from './ad-list/ad-list.component';
 
 import { DataAnunciosService } from './services/data-anuncios.service';
+import { AdListFilterPipe } from './ad-list/ad-list-filter.pipe';
+import { AdComponent } from './ad/ad.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     AdListComponent,
-    HomeComponent
+    HomeComponent,
+    AdListFilterPipe,
+    AdComponent    
   ],
   imports: [
     BrowserModule,
@@ -25,6 +30,8 @@ import { DataAnunciosService } from './services/data-anuncios.service';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [DataAnunciosService],
   bootstrap: [AppComponent]

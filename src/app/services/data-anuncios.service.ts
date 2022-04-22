@@ -22,6 +22,11 @@ export class DataAnunciosService {
     return result;
   }
 
+  getAnuncio(id: number): Observable<IAnuncio> {
+    let result = this._http.get<IAnuncio>(`${this.apiUrl}/api/anuncio/${id}`);
+    return result;
+  }
+
   getTipoAnuncio(id: number): Observable<ITipo> {
     let result = this._http.get<ITipo>(`${this.apiUrl}/api/anuncio/tipo/${id}`);
     return result;

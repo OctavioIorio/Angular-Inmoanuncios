@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 
 import { IAnuncio } from '../interfaces/ianuncio';
-import { DataAnunciosService } from '../services/data-anuncios.service';
 import { ITipo } from '../interfaces/itipo';
 import { IMunicipio } from '../interfaces/imunicipio';
 import { IProvincia } from '../interfaces/iprovincia';
 import { IGeneral } from '../interfaces/igeneral';
+
+import { DataAnunciosService } from '../services/data-anuncios.service';
+import { DataTiposService } from '../services/data-tipos.service';
 
 @Component({
   selector: 'app-ad-list',
@@ -22,18 +24,27 @@ export class AdListComponent implements OnInit {
 
   anuncios: IAnuncio[] = [];
   pageAnuncios: IAnuncio[] = [];
+  tipos: ITipo[] = [];
+  tratos: string[] = ['Alquiler', 'Venta'];
 
-  // Filter form
-  selected = 'option2';
+  // Filter anuncios
+  tipoSelected: number = 0;
+  referencia: string = "";
+  precioMin: number = 0;
+  precioMax: number = 0;
+  areaMin: number = 0;
+  areaMax: number = 0;
+  tratoSelected: string = "";
+  habitaciones: number = 0;
 
-  constructor(private anuncioService: DataAnunciosService, private route: Router) { }
+  constructor(private anuncioService: DataAnunciosService, private tipoService: DataTiposService, private route: Router) { }
 
   ngOnInit(): void {
     this.anuncioService.getData().subscribe((anuncios: Array<IAnuncio>) => {
       for (const anuncio of anuncios) {
         // Get Tipo Anuncio
         this.anuncioService.getTipoAnuncio(anuncio.id).subscribe((tipo: ITipo) => {
-          anuncio.tipo = tipo;  
+          anuncio.tipo = tipo;
         });
         // Get Municipio Anuncio
         this.anuncioService.getMunicipioAnuncio(anuncio.id).subscribe((municipio: IMunicipio) => {
@@ -41,17 +52,21 @@ export class AdListComponent implements OnInit {
         });
         // Get Provincia Anuncio
         this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IGeneral) => {
-          anuncio.provincia = provincia;  
+          anuncio.provincia = provincia;
         });
         // Get Vendedor Anuncio
         this.anuncioService.getVendedorAnuncio(anuncio.id).subscribe((vendedor: IGeneral) => {
-          anuncio.vendedor = vendedor;  
+          anuncio.vendedor = vendedor;
         });
       }
       this.anuncios = anuncios;
       this.pageAnuncios = anuncios.slice(0, 10);
     }, (error) => {
       this.errorMessage = error.message;
+    });
+
+    this.tipoService.getData().subscribe((tipos: Array<ITipo>) => {
+      this.tipos = tipos;
     });
   }
 
