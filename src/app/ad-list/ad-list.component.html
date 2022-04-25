@@ -45,13 +45,8 @@
                     </mat-form-field>
                 </div>
                 <span>Habitaciones</span>
-                <!-- <section class="d-flex flex-column">
-                    <mat-checkbox>1</mat-checkbox>
-                    <mat-checkbox>2</mat-checkbox>
-                    <mat-checkbox>3</mat-checkbox>
-                    <mat-checkbox>4 o más</mat-checkbox>
-                </section> -->
-                <mat-radio-group [(ngModel)]="habitaciones" class="d-flex flex-column" aria-label="Selecciona número de habitaciones">
+                <mat-radio-group [(ngModel)]="habitaciones" class="d-flex flex-column"
+                    aria-label="Selecciona número de habitaciones">
                     <mat-radio-button>Todos</mat-radio-button>
                     <mat-radio-button value="1">1</mat-radio-button>
                     <mat-radio-button value="2">2</mat-radio-button>
@@ -77,25 +72,21 @@
                     <div class="col"
                         *ngFor="let anuncio of pageAnuncios | adListFilter:referencia:tipoSelected:precioMin:precioMax:areaMin:areaMax:tratoSelected:habitaciones">
                         <div class="card">
-                            <img src="{{anuncio.imagen}}" class="card-img-top" alt="...">
+                            <a routerLink="/ad/{{anuncio.id}}">
+                                <img src="{{anuncio.imagen}}" class="card-img-top" alt="adImg-{{anuncio.referencia}}">
+                            </a>
                             <div class="card-body">
                                 <h2 class="card-title">{{anuncio.tipo.nombre}} en {{anuncio.trato}}</h2>
                                 <p class="card-text">{{anuncio.cp}}, {{anuncio.municipio.nombre}},
                                     {{anuncio.provincia.nombre}}</p>
                                 <p class="card-text">{{anuncio.precio}} €</p>
                                 <p class="card-text">{{anuncio.descripcion}}</p>
+                                <p class="card-text">{{anuncio.area}} m²</p>
                                 <p class="card-text">{{anuncio.referencia}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <ul *ngFor="let anuncio of pageAnuncios">
-                    <li>{{anuncio.id}} | {{anuncio.referencia}} | {{anuncio.vendedor_id}} | {{anuncio.imagen}} |
-                        {{anuncio.municipio_id}} | {{anuncio.cp}} | {{anuncio.precio}} | {{anuncio.tipo_id}} |
-                        {{anuncio.trato}} |
-                        {{anuncio.habitaciones}} | {{anuncio.area}} | {{anuncio.descripcion}} | {{anuncio.created_at}}
-                    </li>
-                </ul> -->
             </div>
 
 

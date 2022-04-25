@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { IAnuncio } from '../interfaces/ianuncio';
 import { ITipo } from '../interfaces/itipo';
@@ -19,15 +19,35 @@ export class AdComponent implements OnInit {
 
   apiUrl: string = environment.apiUrl;
   errorMessage: string = "";
+  id = Number(this.aroute.snapshot.params['id']);
 
-  anuncio?: IAnuncio;
+  anuncio!: IAnuncio;
+  vendedor!: IGeneral;
 
-  constructor(private anuncioService: DataAnunciosService, private route: Router) { }
+  constructor(private anuncioService: DataAnunciosService, private route: Router, private aroute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    // this.anuncioService.getAnuncio(anuncio.id).subscribe((anuncio: IAnuncio) => {
-    //   anuncio.anuncio = anuncio;
-    // });
+    this.anuncioService.getAnuncio(this.id).subscribe((anuncio: IAnuncio) => {
+      // Get Vendedor Anuncio
+      this.anuncioService.getVendedorAnuncio(anuncio.id).subscribe((vendedor: IGeneral) => {
+        anuncio.vendedor = vendedor;
+        this.vendedor = vendedor;
+      });
+      // Get Tipo Anuncio
+      this.anuncioService.getTipoAnuncio(anuncio.id).subscribe((tipo: ITipo) => {
+        anuncio.tipo = tipo;
+      });
+      // Get Municipio Anuncio
+      this.anuncioService.getMunicipioAnuncio(anuncio.id).subscribe((municipio: IMunicipio) => {
+        anuncio.municipio = municipio;
+      });
+      // Get Provincia Anuncio
+      this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IGeneral) => {
+        anuncio.provincia = provincia;
+      });
+
+      this.anuncio = anuncio;
+    });
   }
 
 }

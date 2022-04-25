@@ -10,7 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 //     MatDialogModule,
 //     MatExpansionModule,
 //     MatGridListModule,
-//     MatIconModule,
+import {MatIconModule} from '@angular/material/icon';
 //     MatListModule,
 //     MatMenuModule,
 //     MatNativeDateModule,
@@ -45,7 +45,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 //         MatDialogModule,
 //         MatExpansionModule,
 //         MatGridListModule,
-//         MatIconModule,*/         
+         MatIconModule,         
 //         MatListModule,
 //         MatMenuModule,
 //         MatNativeDateModule,
@@ -78,7 +78,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 //         MatDialogModule,
 //         MatExpansionModule,
 //         MatGridListModule,
-//         MatIconModule,
+         MatIconModule,
 //         MatListModule,
 //         MatMenuModule,
 //         MatNativeDateModule,
