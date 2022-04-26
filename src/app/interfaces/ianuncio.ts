@@ -22,4 +22,6 @@ export interface IAnuncio {
     municipio: IMunicipio;
     vendedor: IGeneral;
     provincia: IProvincia;
+    calle: string;
+    num: number;
 }

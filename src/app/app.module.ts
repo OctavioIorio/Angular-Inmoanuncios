@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { GoogleMapsModule } from '@angular/google-maps'
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -22,7 +23,7 @@ import { AdComponent } from './ad/ad.component';
     AdListComponent,
     HomeComponent,
     AdListFilterPipe,
-    AdComponent    
+    AdComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +32,8 @@ import { AdComponent } from './ad/ad.component';
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleMapsModule
   ],
   providers: [DataAnunciosService],
   bootstrap: [AppComponent]

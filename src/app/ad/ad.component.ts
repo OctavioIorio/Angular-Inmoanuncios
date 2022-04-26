@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps'
 
 import { IAnuncio } from '../interfaces/ianuncio';
 import { ITipo } from '../interfaces/itipo';
 import { IMunicipio } from '../interfaces/imunicipio';
 import { IProvincia } from '../interfaces/iprovincia';
 import { IGeneral } from '../interfaces/igeneral';
+import { IMap } from '../interfaces/imap';
 
 import { DataAnunciosService } from '../services/data-anuncios.service';
+import { DataMapService } from '../services/data-map.service';
 
 @Component({
   selector: 'app-ad',
@@ -24,7 +27,15 @@ export class AdComponent implements OnInit {
   anuncio!: IAnuncio;
   vendedor!: IGeneral;
 
-  constructor(private anuncioService: DataAnunciosService, private route: Router, private aroute:ActivatedRoute) { }
+  // Maps
+  map!: IMap;
+  
+  latLng!: google.maps.LatLngLiteral;
+  label = "";
+
+  marker!: google.maps.MarkerOptions;
+  
+  constructor(private anuncioService: DataAnunciosService, private mapService: DataMapService, private route: Router, private aroute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.anuncioService.getAnuncio(this.id).subscribe((anuncio: IAnuncio) => {
@@ -42,12 +53,26 @@ export class AdComponent implements OnInit {
         anuncio.municipio = municipio;
       });
       // Get Provincia Anuncio
-      this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IGeneral) => {
+      this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IProvincia) => {
         anuncio.provincia = provincia;
+      });
+
+      this.mapService.getMap(anuncio).subscribe((map: IMap) => {
+        this.latLng = {
+          lat: map.data[0].latitude,
+          lng: map.data[0].longitude,
+        };
+        this.label = map.data[0].label;
+        this.map = map;
       });
 
       this.anuncio = anuncio;
     });
+
+    // Maps
+    
+
+    
   }
 
 }

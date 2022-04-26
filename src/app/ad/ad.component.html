@@ -9,8 +9,18 @@
             <div>{{anuncio.descripcion}}</div>
         </div>
         <div class="col-4 border">
-            <img src="assets/mapa.jpg" class="img-fluid" alt="mapa" />
-            <p><mat-icon matSuffix>phone</mat-icon>{{vendedor.telefono}}</p>
+
+            <google-map *ngIf="map; else elseBlock" width="100%" height="300px" [center]="latLng" [zoom]="15">
+                <map-marker #marker [position]="latLng" [title]="label"></map-marker>
+            </google-map>
+            <ng-template #elseBlock>
+                <div style="height: 300px !important;" class="d-flex justify-content-center align-items-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem; color: seagreen; border-width: 0.5rem;"></div>
+                </div>
+            </ng-template>
+            <p>
+                <mat-icon matSuffix>phone</mat-icon>{{vendedor.telefono}}
+            </p>
             <p>Vendedor</p>
             <p>{{vendedor.nombre}} {{vendedor.apellidos}}</p>
             <p>Referencia</p>
@@ -18,8 +28,8 @@
             <form>
                 <mat-form-field class="w-100" appearance="fill">
                     <mat-label>Contacta con el vendedor</mat-label>
-                    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-                </mat-form-field>                 
+                    <textarea matInput placeholder="Estoy interesado en..."></textarea>
+                </mat-form-field>
                 <div>
                     <button mat-raised-button color="primary" type="submit">Contactar</button>
                 </div>
