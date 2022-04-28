@@ -15,6 +15,7 @@ import { AdListComponent } from './ad-list/ad-list.component';
 import { DataAnunciosService } from './services/data-anuncios.service';
 import { AdListFilterPipe } from './ad-list/ad-list-filter.pipe';
 import { AdComponent } from './ad/ad.component';
+import { AdFormComponent } from './ad-form/ad-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AdComponent } from './ad/ad.component';
     AdListComponent,
     HomeComponent,
     AdListFilterPipe,
-    AdComponent
+    AdComponent,
+    AdFormComponent
   ],
   imports: [
     BrowserModule,

@@ -24,11 +24,12 @@ export class AdComponent implements OnInit {
   errorMessage: string = "";
   id = Number(this.aroute.snapshot.params['id']);
 
-  anuncio!: IAnuncio;
-  vendedor!: IGeneral;
+  anuncio?: IAnuncio;
+  vendedor?: IGeneral;
 
   // Maps
   map!: IMap;
+  errorMessageMap: string = "";
   
   latLng!: google.maps.LatLngLiteral;
   label = "";
@@ -57,6 +58,7 @@ export class AdComponent implements OnInit {
         anuncio.provincia = provincia;
       });
 
+      // Maps
       this.mapService.getMap(anuncio).subscribe((map: IMap) => {
         this.latLng = {
           lat: map.data[0].latitude,
@@ -64,14 +66,14 @@ export class AdComponent implements OnInit {
         };
         this.label = map.data[0].label;
         this.map = map;
+      }, (error) => {
+        this.errorMessageMap = error.message;
       });
 
       this.anuncio = anuncio;
+    }, (error) => {
+      this.errorMessage = error.message;
     });
-
-    // Maps
-    
-
     
   }
 

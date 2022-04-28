@@ -76,9 +76,9 @@
                                 <img src="{{anuncio.imagen}}" class="card-img-top" alt="adImg-{{anuncio.referencia}}">
                             </a>
                             <div class="card-body">
-                                <h2 class="card-title">{{anuncio.tipo.nombre}} en {{anuncio.trato}}</h2>
-                                <p class="card-text">{{anuncio.cp}}, {{anuncio.municipio.nombre}},
-                                    {{anuncio.provincia.nombre}}</p>
+                                <h2 class="card-title">{{anuncio.tipo?.nombre}} en {{anuncio.trato}}</h2>
+                                <p class="card-text">{{anuncio.cp}}, {{anuncio.municipio?.nombre}},
+                                    {{anuncio.provincia?.nombre}}</p>
                                 <p class="card-text">{{anuncio.precio}} €</p>
                                 <p class="card-text">{{anuncio.descripcion}}</p>
                                 <p class="card-text">{{anuncio.area}} m²</p>

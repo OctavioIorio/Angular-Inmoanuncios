@@ -1,0 +1,66 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm border d-flex justify-content-center">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()" novalidate
+                class='form container pt-4 d-flex flex-column'>
+                <mat-form-field appearance="fill">
+                    <mat-label>Tipo de inmueble</mat-label>
+                    <mat-select [(ngModel)]="tipoSelected" [(value)]="tipoSelected" formControlName="tipo_id">
+                        <div *ngFor="let tipo of tipos">
+                            <mat-option [value]="tipo.id">{{tipo.nombre}}</mat-option>
+                        </div>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Number</mat-label>
+                    <input type="text" placeholder="Pick one" aria-label="Number" matInput
+                        formControlName="municipio_id" [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="fill">
+                    <mat-label>Municipio</mat-label>
+                    <mat-select [(ngModel)]="municipioSelected" [(value)]="municipioSelected" formControlName="municipio_id">
+                        <div *ngFor="let municipio of municipios">
+                            <mat-option [value]="municipio.id">{{municipio.nombre}}</mat-option>
+                        </div>
+                    </mat-select>
+                </mat-form-field> -->
+
+                <mat-form-field class="form-element">
+                    <input type="number" matInput placeholder="Código Postal" #cp formControlName="cp" [minlength]="5"
+                        [maxlength]="5">
+                    <mat-hint align="end">{{cp.value?.length || 0}}/5</mat-hint>
+                    <mat-error *ngIf="noValid('cp')">
+                        {{ getErrorMessage('cp') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field hintLabel="3 caràcters mínim" class="form-element">
+                    <input matInput placeholder="Calle" #calle [minlength]="3" formControlName="calle">
+                    <mat-hint align="end">{{calle.value?.length || 0}}/3</mat-hint>
+                    <mat-error *ngIf="noValid('calle')">
+                        {{ getErrorMessage('calle') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="form-element">
+                    <input type="file" name="imagen" (change)="onFileSelect($event)" formControlName="imagen" />
+                </div>
+
+                <div class="form-element">
+                    <button mat-raised-button type="submit" class="button" matTooltip="Crea el anuncio"
+                        matTooltipPosition="after" [disabled]="!myForm.valid">Afegir</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-sm border">
+        </div>
+    </div>
+</div>

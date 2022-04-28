@@ -19,7 +19,6 @@ export class DataAnunciosService {
 
   getData(): Observable<IAnuncio[]> {
     let result = this._http.get<IAnuncio[]>(`${this.apiUrl}/api/anuncios`);
-
     return result;
   }
 
@@ -52,23 +51,4 @@ export class DataAnunciosService {
     let apiKey = '9461f1f9a3766f44b90bdffd4466830a';
     return this._http.get(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${calle}${num}${cp}${municipio}${provincia}`)
   }
-
-  // getLatLngAnuncio(municipio: string, provincia: string, calle: string, num: number, cp: number) {
-  //   let apiKey = '9461f1f9a3766f44b90bdffd4466830a';
-  //   let result = this._http.get(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${calle + num + cp + municipio + provincia}`);
-  //   return result;
-  //   // http://api.positionstack.com/v1/forward
-  //   // ? access_key = YOUR_ACCESS_KEY
-  //   // & query = 1600 Pennsylvania Ave NW, Washington DC
-  // }
-
-  // getLatLng(municipio: string, provincia: string, calle: string, num: number, cp: number) {
-  //   let apiKey = '9461f1f9a3766f44b90bdffd4466830a';
-  //   let result;
-  //   this._http.get(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${calle + num + cp + municipio + provincia}`)
-  //     .subscribe(res => {
-  //       result = res;
-  //     });
-  //   return result;
-  // }
 }

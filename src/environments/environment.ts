@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost/daw/m14/Inmoanuncios/API-Inmoanuncios/API-Inmoanuncios/public/index.php' || 'http://localhost/2021-2022/M14/proyecto/API-Inmoanuncios/API-Inmoanuncios/public/index.php'
+  apiUrl: 'http://localhost/daw/m14/Inmoanuncios/API-Inmoanuncios/public/index.php' || 'http://localhost/2021-2022/M14/proyecto/API-Inmoanuncios/public/index.php'
 };
 
 /*
