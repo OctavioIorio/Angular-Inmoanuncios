@@ -1,0 +1,99 @@
+<div id="contenido-registro" class="p-5">
+  <div id="contenido-formulario" class="container p-5">
+    <div id="titulo" class="mx-auto text-center">
+      <img src="assets/yospace-logo.svg" class="ms-4 mx-auto" width="100px" alt="foto-logo-register" />
+      <h1 class="ms-4">Inmoanuncios</h1>
+    </div>
+    <div id="formulario-register">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-element mb-3">
+              <label for="nombre" class="form-label">Nombre &nbsp;</label>
+              <input type="text" class="form-control" id="nombre" formControlName="nombre">
+              <span *ngIf="noValid('nombre')" class="error">
+                {{ getErrorMessage('nombre') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-element mb-3">
+              <label for="apellidos" class="form-label">Apellidos &nbsp;</label>
+              <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
+              <span *ngIf="noValid('apellidos')" class="error">
+                {{ getErrorMessage('apellidos') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-element mb-3">
+              <label for="nickname" class="form-label">Nickname &nbsp;</label>
+              <input type="text" class="form-control" id="nickname" formControlName="nickname">
+              <span *ngIf="noValid('nickname')" class="error">
+                {{ getErrorMessage('nickname') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-element mb-3">
+              <label for="email" class="form-label">Email &nbsp;</label>
+              <input type="email" class="form-control" id="email" formControlName="email">
+              <span *ngIf="noValid('email')" class="error">
+                {{ getErrorMessage('email') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-element mb-3">
+              <label for="password" class="form-label">Password &nbsp;</label>
+              <input type="password" class="form-control" id="password" formControlName="password">
+              <span *ngIf="noValid('password')" class="error">
+                {{ getErrorMessage('password') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-element">
+              <label for="cpassword" class="form-label">Confirm password &nbsp;</label>
+              <input type="password" class="form-control" id="cpassword" formControlName="cpassword" (change)="samePassword()">
+              <span *ngIf="noValid('cpassword')" class="error">
+                {{ getErrorMessage('cpassword') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-element mb-3">
+              <label for="telefono" class="form-label">Telefono &nbsp;</label>
+              <input type="tel" class="form-control" id="telefono" pattern="^([+]?\d{1,2}[-\s]?|)[9|6|7][0-9]{8}$" formControlName="telefono">
+              <span *ngIf="noValid('telefono')" class="error">
+                {{ getErrorMessage('telefono') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-element mb-3">
+              <label for="imagen" class="form-label">Foto de perfil &nbsp;</label>
+              <input type="file" class="form-control" id="imagen" formControlName="imagen">
+              <span *ngIf="noValid('imagen')" class="error">
+                {{ getErrorMessage('imagen') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center">
+            <div class="form-element mb-3">
+              <input type="checkbox" id="terminos" formControlName="terminos">
+              <label for="terminos" class="form-label">&nbsp; Aceptar términos y condiciones</label>
+              <span *ngIf="noValid('terminos')" class="error">
+                {{ getErrorMessage('terminos') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center">
+            <button color="primary" type="submit" id="boton-inmo" class="btn btn-primary" [disabled]="!registerForm.valid" disabled>Crear usuario
+              inmoanuncios</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

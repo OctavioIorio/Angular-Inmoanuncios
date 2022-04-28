@@ -4,18 +4,24 @@ import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { GoogleMapsModule } from '@angular/google-maps'
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { AdListComponent } from './ad-list/ad-list.component';
-
 import { DataAnunciosService } from './services/data-anuncios.service';
 import { AdListFilterPipe } from './ad-list/ad-list-filter.pipe';
 import { AdComponent } from './ad/ad.component';
 import { AdFormComponent } from './ad-form/ad-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings, RECAPTCHA_SETTINGS } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,9 @@ import { AdFormComponent } from './ad-form/ad-form.component';
     HomeComponent,
     AdListFilterPipe,
     AdComponent,
-    AdFormComponent
+    AdFormComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +43,22 @@ import { AdFormComponent } from './ad-form/ad-form.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    NgxMatFileInputModule,
+    NgxCaptchaModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
-  providers: [DataAnunciosService],
+  providers: [
+    DataAnunciosService,
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
+    },
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

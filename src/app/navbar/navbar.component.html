@@ -19,9 +19,21 @@
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="['ad-list']">AdList</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sign Up</a>
-                    </li>
+
+                    <!-- EMPIEZA IF -->
+                    <ng-template [ngIf]="valor_cookie == ''" [ngIfElse]="loggedOut">
+                      <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['login']">Sign Up</a>
+                      </li>
+                    </ng-template>
+
+                    <ng-template #loggedOut>
+                      <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['home']" (click)="signOut()">Sign Out</a>
+                      </li>
+                    </ng-template>
+                    <!-- ACABA IF -->
+
                     <li class="nav-item mt-1">
                         <mat-form-field appearance="fill" style="width: 100px;">
                             <!-- <mat-label>Idioma</mat-label> -->

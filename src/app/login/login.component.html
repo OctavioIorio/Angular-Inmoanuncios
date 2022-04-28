@@ -1,0 +1,55 @@
+<div id="contenido-registro" class="p-5">
+  <div id="contenido-formulario" class="container p-5">
+    <div id="titulo" class="mx-auto text-center">
+      <img src="assets/yospace-logo.svg" class="ms-4 mx-auto" width="100px" alt="foto-logo-login" />
+      <h1 class="ms-4">Inmoanuncios</h1>
+    </div>
+    <div id="formulario-login" class="w-auto mx-auto">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row w-75 d-flex justify-content-center mx-auto">
+          <div class="col-12 w-100">
+            <div class="form-element mb-3">
+              <label for="nombre" class="form-label">Nombre &nbsp;</label>
+              <input type="text" class="form-control" id="nombre" formControlName="nombre">
+              <span *ngIf="noValid('nombre')" class="error">
+                {{ getErrorMessage('nombre') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 w-100">
+            <div class="form-element mb-3">
+              <label for="password" class="form-label">Password &nbsp;</label>
+              <input type="password" class="form-control" id="password" formControlName="password">
+              <span *ngIf="noValid('password')" class="error">
+                {{ getErrorMessage('password') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center">
+            <div class="form-element mb-3">
+              <ngx-recaptcha2 formControlName="recaptcha" [siteKey]="sitekey">
+              </ngx-recaptcha2>
+              <span *ngIf="noValid('recaptcha')" class="error">
+                {{ getErrorMessage('recaptcha') }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center">
+            <div class="form-element mb-3">
+              <a class="text-decoration-none nav-link" [routerLink]="['../register']">No tienes cuenta? Regístrate aqui</a>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center">
+            <div class="form-element mb-3">
+              <span class="error no-visible" #myNameElem id="login-error">Error de login</span>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center">
+            <button color="primary" type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Entrar
+              inmoanuncios</button><!-- [disabled]="!loginForm.valid" -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

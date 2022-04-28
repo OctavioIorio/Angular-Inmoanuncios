@@ -1,0 +1,11 @@
+#contenido-registro {
+  background-color: lightgrey;
+}
+
+#contenido-formulario {
+  background-color: white;
+}
+
+.error{
+  color: red;
+}
