@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   @ViewChild("myNameElem")
   myNameElem!: ElementRef;
 
-  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent,  public location: Location) {
+  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent, public location: Location) {
     this.loginForm = this.createForm();
   }
 
@@ -66,7 +66,10 @@ export class LoginComponent implements OnInit {
       const elem = this.usuArray[i];
       if (nickname?.value == elem.nickname && password?.value == elem.password) {
         this.app.saveCookie(elem.id);
-        this.route.navigate(['home']);
+        this.route.navigate(['/home'])
+          .then(() => {
+            window.location.reload();
+          });
       } else {
         this.myNameElem.nativeElement.classList.remove("no-visible");
         //console.log("Resultado: " + false);
