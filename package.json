@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/file-input": "^7.0.1",
     "@angular/animations": "~13.1.0",
     "@angular/cdk": "^13.3.3",
     "@angular/common": "~13.1.0",
@@ -20,6 +21,9 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "ng-recaptcha": "^9.0.0",
+    "ngx-captcha": "^11.0.0",
+    "ngx-cookie-service": "^13.2.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

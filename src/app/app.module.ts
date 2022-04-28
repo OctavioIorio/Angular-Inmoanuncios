@@ -12,6 +12,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdListComponent } from './ad-list/ad-list.component';
 import { DataAnunciosService } from './services/data-anuncios.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings, RECAPTCHA_SETTINGS } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -28,8 +34,23 @@ import { DataAnunciosService } from './services/data-anuncios.service';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxMatFileInputModule,
+    NgxCaptchaModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
-  providers: [DataAnunciosService],
+  providers: [
+    DataAnunciosService,
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
+    },
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
