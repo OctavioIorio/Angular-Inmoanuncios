@@ -1,1 +1,34 @@
-<p>home works!</p>
+<main class="container-fluid  d-flex justify-content-center align-items-center">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" novalidate
+        class="border form p-3 container-fluid d-flex justify-content-center align-items-center gap-2">
+        <!-- <input type="text" class="form-control" id="nombre" formControlName="referencia"> -->
+        <div class="home-provincias" appearance="fill">
+            <!-- <mat-label>Provincia</mat-label> -->
+            <input type="text" placeholder="Escoge provincia" matInput [formControl]="myControl"
+                [matAutocomplete]="autoProvincia" (blur)="this.filteredMunicipios=munisFiltered()">
+            <mat-autocomplete #autoProvincia="matAutocomplete" [displayWith]="displayFnProv.bind(this)">
+                <mat-option *ngFor="let provincia of filteredProvincias | async" [value]="provincia.id" id="prov-form">
+                    {{provincia.nombre}}
+                </mat-option>
+            </mat-autocomplete>
+            <!-- <mat-error *ngIf="noValid('provincia_id')">
+                {{ getErrorMessage('provincia_id') }}
+            </mat-error> -->
+        </div>
+        <div class="home-municipios" appearance="fill">
+            <!-- <mat-label>Municipio</mat-label> -->
+            <input type="text" placeholder="Escoge municipio" matInput formControlName="municipio_id"
+                [matAutocomplete]="autoMunicipio">
+            <mat-autocomplete #autoMunicipio="matAutocomplete" [displayWith]="displayFnMun">
+                <mat-option *ngFor="let municipio of filteredMunicipios | async" [value]="municipio">
+                    {{municipio.nombre}}
+                </mat-option>
+            </mat-autocomplete>
+            <!-- <mat-error *ngIf="noValid('municipio_id')">
+                {{ getErrorMessage('municipio_id') }}
+            </mat-error> -->
+        </div>
+        <!-- <a routerLink="/ad-list/{{anuncio.id}}"></a> -->
+        <button mat-raised-button type="submit" class="button home-button" [disabled]="!myForm.valid">Buscar</button>
+    </form>
+</main>

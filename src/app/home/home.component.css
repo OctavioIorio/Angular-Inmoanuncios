@@ -1,0 +1,42 @@
+main {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/assets/home-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: clamp(calc(100vh - 76px), calc(100vh - 90.0667px), calc(100vh - 90.0667px));
+}
+
+form {
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    border-radius: 1em;
+    width: 50%;
+}
+
+.home-provincias input[type=text],
+.home-municipios input[type=text] {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 5px;
+    transition: 1.5;
+}
+
+.home-provincias input[type=text]::placeholder,
+.home-municipios input[type=text]::placeholder {
+    color: white;
+}
+
+.home-provincias input[type=text]:focus,
+.home-municipios input[type=text]:focus {
+    outline: 2px solid white;
+}
+
+.home-button:disabled {
+    background-color: rgb(255, 255, 255, 0.4);
+}
+
+@media (max-width: 600px) {
+    .form {
+        width: 100%;
+    }
+}

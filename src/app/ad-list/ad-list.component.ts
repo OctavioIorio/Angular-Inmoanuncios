@@ -18,7 +18,6 @@ import { DataTiposService } from '../services/data-tipos.service';
   styleUrls: ['./ad-list.component.css']
 })
 export class AdListComponent implements OnInit {
-
   apiUrl: string = environment.apiUrl;
   errorMessage: string = "";
 

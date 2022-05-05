@@ -6,10 +6,6 @@ import { IAnuncio } from '../interfaces/ianuncio';
 })
 export class AdListFilterPipe implements PipeTransform {
 
-  // transform(value: unknown, ...args: unknown[]): unknown {
-  //   return null;
-  // }
-
   transform(pageAnuncios: IAnuncio[], filterByReferencia: string, filterByTipo: number, filterByPrecioMin: number, filterByPrecioMax: number, filterByAreaMin: number, filterByAreaMax: number, filterByTrato: string, filterByHabitaciones: number): IAnuncio[] {
     filterByReferencia = filterByReferencia ? filterByReferencia.toLowerCase() : "";
     return pageAnuncios.filter((anuncio) => {

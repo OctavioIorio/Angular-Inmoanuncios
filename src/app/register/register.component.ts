@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   errorMessage: string = "Error de proba";
   pattern_password = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$";
   pattern_telefono = "^([+]?\d{1,2}[-\s]?|)[9|6|7][0-9]{8}$";
-  errorPassword: string = "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. NO puede tener otros símbolos";
+  errorPassword: string = "La contraseña debe tener al menos entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. NO puede tener otros símbolos";
 
   constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent) {
     this.registerForm = this.createForm();

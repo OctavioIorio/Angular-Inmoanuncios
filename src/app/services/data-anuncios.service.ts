@@ -51,4 +51,8 @@ export class DataAnunciosService {
     let apiKey = '9461f1f9a3766f44b90bdffd4466830a';
     return this._http.get(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${calle}${num}${cp}${municipio}${provincia}`)
   }
+
+  public postAnuncio(formData: FormData): Observable<any> {
+    return this._http.post(`${this.apiUrl}/api/anuncio`, formData);
+  }
 }
