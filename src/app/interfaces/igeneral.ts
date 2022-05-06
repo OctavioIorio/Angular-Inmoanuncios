@@ -1,7 +1,7 @@
 import { IUsuario } from "./iusuario";
 
 export interface IGeneral {
-    id: IUsuario["id"];
+    id: number;
     nombre: string;
     apellidos: string;
     email: string;

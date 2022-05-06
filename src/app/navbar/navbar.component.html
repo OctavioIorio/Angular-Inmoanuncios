@@ -13,31 +13,34 @@
                     <!-- <li class="nav-item">
                         <a class="nav-link" [routerLink]="['home']">Home</a>
                     </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['ad-form']">Publicar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['ad-list']">AdList</a>
+                    <li class="nav-item me-md-2">
+                      <a class="nav-link" [routerLink]="['ad-list']">{{'navbar.adlist' | translate}}</a>
                     </li>
 
                     <!-- EMPIEZA IF -->
                     <ng-template [ngIf]="valor_cookie == ''" [ngIfElse]="loggedOut">
-                      <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['login']">Sign Up</a>
+                      <li class="nav-item me-md-2">
+                        <a class="nav-link" [routerLink]="['login']">{{'navbar.signin' | translate}}</a>
                       </li>
                     </ng-template>
 
                     <ng-template #loggedOut>
-                      <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['home']" (click)="signOut()">Sign Out</a>
+                      <li class="nav-item me-md-2">
+                        <a class="nav-link" [routerLink]="['home']" (click)="signOut()">{{'navbar.signout' | translate}}</a>
                       </li>
+                      <li class="nav-item me-md-2">
+                        <a class="nav-link" [routerLink]="['profile']">{{'navbar.profile' | translate}}</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['ad-form']">Publicar</a>
+                    </li>
                     </ng-template>
                     <!-- ACABA IF -->
 
                     <li class="nav-item mt-1">
                         <mat-form-field appearance="fill" style="width: 100px;">
                             <!-- <mat-label>Idioma</mat-label> -->
-                            <mat-select [value]="lng.value">
+                            <mat-select [value]="lng.value" (selectionChange)="switchLang($event)">
                                 <mat-option *ngFor="let lng of lngs" [value]="lng.value">
                                     <img style="width:25px;height:20px;" src="{{lng.img}}" alt="{{lng.label}}-img">
                                     {{lng.label}}

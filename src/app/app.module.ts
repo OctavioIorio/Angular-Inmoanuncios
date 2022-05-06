@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { GoogleMapsModule } from '@angular/google-maps'
 
 import { AppComponent } from './app.component';
@@ -22,6 +22,11 @@ import { RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings, RECAPTCHA_SET
 import { environment } from 'src/environments/environment';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { CookieService } from 'ngx-cookie-service';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
+import { Cloudinary } from 'cloudinary-core';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,8 @@ import { CookieService } from 'ngx-cookie-service';
     AdComponent,
     AdFormComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +54,15 @@ import { CookieService } from 'ngx-cookie-service';
     NgxCaptchaModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
+    CloudinaryModule,
+    CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'inmoanuncios' } as CloudinaryConfiguration),
   ],
   providers: [
     DataAnunciosService,
@@ -62,3 +77,6 @@ import { CookieService } from 'ngx-cookie-service';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
