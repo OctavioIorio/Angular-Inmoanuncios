@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { IMunicipio } from '../interfaces/imunicipio';
@@ -69,19 +69,27 @@ export class HomeComponent implements OnInit {
       cc.touched);
   }
 
+  con() {
+    console.log(this.myForm.get('municipio_id')?.value.id);
+  }
+
   onSubmit() {
     if (!this.myForm.valid) {
       return;
     }
+
+    // this.route.navigate(["/ad-list"]);
+    this.route.navigate([`/ad-list/${this.myForm.get('municipio_id')?.value?.id}`]);
+    // routerLink="/ad-list/{{this.myForm.get('municipio_id')?.value?.id}}"
     //https://www.positronx.io/how-to-use-angular-8-httpclient-to-post-formdata/
     //https://www.techiediaries.com/angular-formdata/
 
-    const formData = new FormData();
-    var municipio_id = this.myForm.get('municipio_id');
+    // const formData = new FormData();
+    // var municipio_id = this.myForm.get('municipio_id');
 
-    if (municipio_id) formData.append("municipio_id", municipio_id.value.id);
+    // if (municipio_id) formData.append("municipio_id", municipio_id.value.id);
 
-    console.log(formData);
+    // console.log(formData);
 
     // this.anuncioService.postAnuncio(formData).subscribe({
     //   next: (res) => {

@@ -2,7 +2,7 @@ main {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/assets/home-bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    height: clamp(calc(100vh - 76px), calc(100vh - 90.0667px), calc(100vh - 90.0667px));
+    height: calc(100vh - 90.0667px);
 }
 
 form {
@@ -18,7 +18,7 @@ form {
     height: 30px;
     border-radius: 5px;
     padding-left: 5px;
-    transition: 1.5;
+    transition: 0.5s;
 }
 
 .home-provincias input[type=text]::placeholder,
@@ -31,11 +31,14 @@ form {
     outline: 2px solid white;
 }
 
-.home-button:disabled {
+/* .home-button:disabled {
     background-color: rgb(255, 255, 255, 0.4);
-}
+} */
 
 @media (max-width: 600px) {
+    main {
+        height: calc(100vh - 76px);
+    }
     .form {
         width: 100%;
     }

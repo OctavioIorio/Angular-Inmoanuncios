@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 
 import { IAnuncio } from '../interfaces/ianuncio';
@@ -20,6 +20,7 @@ import { DataTiposService } from '../services/data-tipos.service';
 export class AdListComponent implements OnInit {
   apiUrl: string = environment.apiUrl;
   errorMessage: string = "";
+  mun_id = Number(this.aroute.snapshot.params['mun_id']);
 
   anuncios: IAnuncio[] = [];
   pageAnuncios: IAnuncio[] = [];
@@ -36,7 +37,7 @@ export class AdListComponent implements OnInit {
   tratoSelected: string = "";
   habitaciones: number = 0;
 
-  constructor(private anuncioService: DataAnunciosService, private tipoService: DataTiposService, private route: Router) { }
+  constructor(private anuncioService: DataAnunciosService, private tipoService: DataTiposService, private route: Router, private aroute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.anuncioService.getData().subscribe((anuncios: Array<IAnuncio>) => {
@@ -57,9 +58,10 @@ export class AdListComponent implements OnInit {
         this.anuncioService.getVendedorAnuncio(anuncio.id).subscribe((vendedor: IGeneral) => {
           anuncio.vendedor = vendedor;
         });
+        anuncio.descripcion = this.ellipsisDesc(anuncio.descripcion);
       }
-      this.anuncios = anuncios;
-      this.pageAnuncios = anuncios.slice(0, 10);
+      this.anuncios = anuncios.filter(anuncio => anuncio.municipio_id === this.mun_id);
+      this.pageAnuncios = anuncios.filter(anuncio => anuncio.municipio_id === this.mun_id).slice(0, 10);
     }, (error) => {
       this.errorMessage = error.message;
     });
@@ -79,5 +81,12 @@ export class AdListComponent implements OnInit {
 
     this.pageAnuncios = this.anuncios.slice(startIndex, endIndex);
   }
+
+  ellipsisDesc(desc: string) {
+    if (desc.length > 150) {
+      return desc.substring(0, 150) + '...';
+    }
+    return desc;
+  };
 
 }

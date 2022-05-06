@@ -1,7 +1,6 @@
 <main class="container-fluid  d-flex justify-content-center align-items-center">
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" novalidate
+    <form [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()"
         class="border form p-3 container-fluid d-flex justify-content-center align-items-center gap-2">
-        <!-- <input type="text" class="form-control" id="nombre" formControlName="referencia"> -->
         <div class="home-provincias" appearance="fill">
             <!-- <mat-label>Provincia</mat-label> -->
             <input type="text" placeholder="Escoge provincia" matInput [formControl]="myControl"
@@ -28,7 +27,7 @@
                 {{ getErrorMessage('municipio_id') }}
             </mat-error> -->
         </div>
-        <!-- <a routerLink="/ad-list/{{anuncio.id}}"></a> -->
-        <button mat-raised-button type="submit" class="button home-button" [disabled]="!myForm.valid">Buscar</button>
+        <!-- <a mat-raised-button class="button home-button" [disabled]="!myForm.valid" routerLink="/ad-list/{{this.myForm.get('municipio_id')?.value?.id}}">Buscar</a> -->
+        <button  type="submit" class="btn btn-light home-button" [disabled]="!myForm.valid">Buscar</button>
     </form>
 </main>
