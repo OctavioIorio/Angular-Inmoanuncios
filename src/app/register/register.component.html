@@ -9,88 +9,87 @@
         <div class="row">
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
-              <label for="nombre" class="form-label">Nombre &nbsp;</label>
+              <label for="nombre" class="form-label">{{'form.name' | translate}} &nbsp;</label>
               <input type="text" class="form-control" id="nombre" formControlName="nombre">
               <span *ngIf="noValid('nombre')" class="error">
-                {{ getErrorMessage('nombre') }}
+                {{ getErrorMessage('nombre') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
-              <label for="apellidos" class="form-label">Apellidos &nbsp;</label>
+              <label for="apellidos" class="form-label">{{'form.surname' | translate}} &nbsp;</label>
               <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
               <span *ngIf="noValid('apellidos')" class="error">
-                {{ getErrorMessage('apellidos') }}
+                {{ getErrorMessage('apellidos') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
-              <label for="nickname" class="form-label">Nickname &nbsp;</label>
+              <label for="nickname" class="form-label">{{'form.nickname' | translate}} &nbsp;</label>
               <input type="text" class="form-control" id="nickname" formControlName="nickname">
               <span *ngIf="noValid('nickname')" class="error">
-                {{ getErrorMessage('nickname') }}
+                {{ getErrorMessage('nickname') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
-              <label for="email" class="form-label">Email &nbsp;</label>
+              <label for="email" class="form-label">{{'form.email' | translate}} &nbsp;</label>
               <input type="email" class="form-control" id="email" formControlName="email">
               <span *ngIf="noValid('email')" class="error">
-                {{ getErrorMessage('email') }}
+                {{ getErrorMessage('email') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
-              <label for="password" class="form-label">Password &nbsp;</label>
+              <label for="password" class="form-label">{{'form.password' | translate}} &nbsp;</label>
               <input type="password" class="form-control" id="password" formControlName="password">
               <span *ngIf="noValid('password')" class="error">
-                {{ getErrorMessage('password') }}
+                {{ getErrorMessage('password') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-element">
-              <label for="cpassword" class="form-label">Confirm password &nbsp;</label>
+              <label for="cpassword" class="form-label">{{'form.cpassword' | translate}} &nbsp;</label>
               <input type="password" class="form-control" id="cpassword" formControlName="cpassword" (change)="samePassword()">
               <span *ngIf="noValid('cpassword')" class="error">
-                {{ getErrorMessage('cpassword') }}
+                {{ getErrorMessage('cpassword') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
-              <label for="telefono" class="form-label">Telefono &nbsp;</label>
+              <label for="telefono" class="form-label">{{'form.phone' | translate}} &nbsp;</label>
               <input type="tel" class="form-control" id="telefono" pattern="^([+]?\d{1,2}[-\s]?|)[9|6|7][0-9]{8}$" formControlName="telefono">
               <span *ngIf="noValid('telefono')" class="error">
-                {{ getErrorMessage('telefono') }}
+                {{ getErrorMessage('telefono') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
-              <label for="imagen" class="form-label">Foto de perfil &nbsp;</label>
+              <label for="imagen" class="form-label">{{'form.photo' | translate}} &nbsp;</label>
               <input type="file" class="form-control" id="imagen" formControlName="imagen">
               <span *ngIf="noValid('imagen')" class="error">
-                {{ getErrorMessage('imagen') }}
+                {{ getErrorMessage('imagen') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 d-flex justify-content-center">
             <div class="form-element mb-3">
               <input type="checkbox" id="terminos" formControlName="terminos">
-              <label for="terminos" class="form-label">&nbsp; Aceptar términos y condiciones</label>
+              <label for="terminos" class="form-label">&nbsp; {{'form.term' | translate}}</label>
               <span *ngIf="noValid('terminos')" class="error">
-                {{ getErrorMessage('terminos') }}
+                {{ getErrorMessage('terminos') | translate }}
               </span>
             </div>
           </div>
           <div class="col-12 d-flex justify-content-center">
-            <button color="primary" type="submit" id="boton-inmo" class="btn btn-primary" [disabled]="!registerForm.valid" disabled>Crear usuario
-              inmoanuncios</button>
+            <button color="primary" type="submit" id="boton-inmo" class="btn btn-primary" [disabled]="!registerForm.valid" disabled>{{'form.buttonRegister' | translate}}</button>
           </div>
         </div>
       </form>
