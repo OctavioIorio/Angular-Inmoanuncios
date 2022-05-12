@@ -5,6 +5,7 @@
   "navbar.signout": "Sign Out",
   "navbar.profile": "Profile",
   "navbar.publish": "Publish",
+  "navbar.admin": "Management control",
   "form.name": "Name",
   "form.surname": "Surname",
   "form.nickname": "Nickname",

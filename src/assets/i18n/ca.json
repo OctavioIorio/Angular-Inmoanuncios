@@ -5,6 +5,7 @@
   "navbar.signout": "Tancar sessió",
   "navbar.profile": "Perfill",
   "navbar.publish": "Publicar",
+  "navbar.admin": "Control d'administració",
   "form.name": "Nom",
   "form.surname": "Cognoms",
   "form.nickname": "Sobrenom",

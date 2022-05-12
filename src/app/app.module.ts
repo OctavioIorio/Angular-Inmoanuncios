@@ -27,6 +27,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { Cloudinary } from 'cloudinary-core';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { ProfileComponent } from './profile/profile.component';
     AdFormComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ import { ProfileComponent } from './profile/profile.component';
     NgxMatFileInputModule,
     NgxCaptchaModule,
     RecaptchaModule,
+    MatTableModule,
     RecaptchaFormsModule,
     TranslateModule.forRoot({
       loader: {

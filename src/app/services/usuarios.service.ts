@@ -22,17 +22,19 @@ export class UsuariosService {
     return this._http.get<IUsuario[]>(`${this.apiUrl}/api/usuarios`);
   }
 
+  getGenerales(): Observable<IGeneral[]> {
+    return this._http.get<IGeneral[]>(`${this.apiUrl}/api/generals`);
+  }
+
   public getUsuarioGenConcreto(id:number): Observable<any> {
     return this._http.get(`${this.apiUrl}/api/general/`+ id);
   }
 
-  // public editUsuarioGenConcreto(id:number, datos:any): Observable<any> {
-  //   return this._http.put<IGeneral>(`${this.apiUrl}/api/general/`+ id, datos);
-  // }
+  public editUsuarioGenConcreto(id:number, datos:any): Observable<any> {
+    return this._http.post<IGeneral>(`${this.apiUrl}/api/general/`+ id, datos);
+  }
 
-  public editUsuarioGenConcreto(id:number, formdata:FormData): Observable<any> {
-    // return this._http.put<IGeneral>(`${this.apiUrl}/api/general/`+ id, datos);
-
-    return this._http.put<IGeneral>(`${this.apiUrl}/api/general/`+ id, formdata,);
+  public deleteUsuarioGenConcreto(id:number): Observable<any> {
+    return this._http.delete(`${this.apiUrl}/api/general/`+ id);
   }
 }

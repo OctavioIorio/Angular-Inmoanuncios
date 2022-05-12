@@ -1,0 +1,108 @@
+<div id="contenido-perfil" class="p-5">
+  <div class="container">
+    <h1>Usuarios</h1>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nickname">
+          <th mat-header-cell *matHeaderCellDef> Nickname </th>
+          <td mat-cell *matCellDef="let element"> {{element.nickname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="apellidos">
+          <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+          <td mat-cell *matCellDef="let element"> {{element.apellidos}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefono">
+          <th mat-header-cell *matHeaderCellDef> Telefono </th>
+          <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button type="button" class="btn btn-primary me-1" (click)="editarUsuario(element.id)"><i class="fa-solid fa-pencil"></i></button>
+            <button type="button" class="btn btn-danger ms-1" (click)="borrarUsuario(element.id)"><i class="fa-solid fa-trash-can"></i></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page to see the users">
+      </mat-paginator>
+    </div>
+
+    <h1>Anuncios</h1>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource2">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="referencia">
+          <th mat-header-cell *matHeaderCellDef> Referencia </th>
+          <td mat-cell *matCellDef="let element"> {{element.referencia}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.vendedor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vendedor">
+          <th mat-header-cell *matHeaderCellDef> Vendedor </th>
+          <td mat-cell *matCellDef="let element"> {{element.vendedor_id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="inmueble">
+          <th mat-header-cell *matHeaderCellDef> Tipo de inmueble </th>
+          <td mat-cell *matCellDef="let element"> {{element.tipo_id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="trato">
+          <th mat-header-cell *matHeaderCellDef> Tipo de trato </th>
+          <td mat-cell *matCellDef="let element"> {{element.trato}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefono">
+          <th mat-header-cell *matHeaderCellDef> Telefono </th>
+          <td mat-cell *matCellDef="let element"> {{element.vendedor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button type="button" class="btn btn-primary me-1" (click)="editarAnuncio(element.id)"><i class="fa-solid fa-pencil"></i></button>
+            <button type="button" class="btn btn-danger ms-1" (click)="borrarAnuncio(element.id)"><i class="fa-solid fa-trash-can"></i></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page to see the users">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

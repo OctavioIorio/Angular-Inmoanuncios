@@ -5,6 +5,7 @@
   "navbar.signout": "Cerrar sesión",
   "navbar.profile": "Perfil",
   "navbar.publish": "Publicar",
+  "navbar.admin": "Control de administración",
   "form.name": "Nombre",
   "form.surname": "Apellidos",
   "form.nickname": "Apodo",
