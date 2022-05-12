@@ -125,29 +125,29 @@ export class RegisterComponent implements OnInit {
     let str = '';
     switch (nControl) {
       case 'nickname':
-        str = ctl.hasError('required') ? 'Field is required' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' : '';
         break;
       case 'password':
-        str = ctl.hasError('required') ? 'Field is required' :
-          ctl.hasError('pattern') ? this.errorPassword : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' :
+          ctl.hasError('pattern') ? 'form.errorPassword' : '';
         break;
       case 'cpassword':
-        str = ctl.hasError('required') ? 'Field is required' :
-        this.match === false ? 'No coinciden' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' :
+        this.match === false ? 'form.errorCPassword' : '';
         break;
       case 'nombre':
-        str = ctl.hasError('required') ? 'No coinciden' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' : '';
         break;
       case 'apellidos':
-        str = ctl.hasError('required') ? 'Field is required' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' : '';
         break;
       case 'email':
-        str = ctl.hasError('required') ? 'Field is required' :
-          ctl.hasError('email') ? 'Not a valid email' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' :
+          ctl.hasError('email') ? 'form.errorEmail' : '';
         break;
       case 'telefono':
-        str = ctl.hasError('required') ? 'Field is required' :
-          ctl.hasError('pattern') ? 'Es incorrecto el formato' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' :
+          ctl.hasError('pattern') ? 'form.errorPhoneFormat' : '';
         break;
       case 'imagen':
         break;

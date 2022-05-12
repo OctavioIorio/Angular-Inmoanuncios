@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   missatge: any;
   imagen_valor: any;
   url: any;
+  info: any = new Object;
 
   constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent, private _uploadService: UploadService) {
     this.editProfileForm = this.createForm();
@@ -29,14 +30,14 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.valor_cookie = this.app.getCookie();
     this.getDatosUsuarios(this.valor_cookie);
+    //document.getElementById("imgperfil")?.setAttribute("src", this.usuario.imagen.replace("%2F", "/"));
+
   }
 
   getDatosUsuarios(id: number) {
     this.usuariosService.getUsuarioGenConcreto(id).subscribe((usuarioGen: IGeneral) => {
       this.usuario = usuarioGen;
-      console.log(usuarioGen);
-      console.log("URL: " + usuarioGen.imagen);
-      document.getElementById("imgperfil")?.setAttribute("src", usuarioGen.imagen);
+      document.getElementById("imgperfil")?.setAttribute("src", usuarioGen.imagen.replace(/%2F/gm, "/"));
       this.actualizaForm(usuarioGen);
     }, (error) => {
       this.errorMessage = error.message;
@@ -59,8 +60,7 @@ export class ProfileComponent implements OnInit {
       this.imagen_valor = file;
       console.log("INFO: " + this.imagen_valor);
       this.editProfileForm.get('imagen')?.setValue(file);
-
-
+      this.onUpload();
     }
   }
 
@@ -80,6 +80,35 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
+    if (this.imagen_valor) {
+      console.log("Se ejecuta onupload");
+      this.onUpload();
+    } else {
+      this.restainfo();
+    }
+
+  }
+
+  onUpload() {
+
+    const data = new FormData();
+    data.append('file', this.imagen_valor);
+    data.append('upload_preset', 'inmoanuncios_cloudinary');
+    data.append('cloud_name', 'inmoanuncios');
+
+    this._uploadService.uploadImage(data).subscribe(res => {
+      this.info = res;
+      console.log(this.info);
+      this.restainfo();
+    });
+  }
+
+  restainfo() {
+
+
+    var url_upload = this.info.secure_url;
+    console.log(url_upload);
+
     const formData = new FormData();
 
     var nombre = this.editProfileForm.get('nombre');
@@ -88,28 +117,18 @@ export class ProfileComponent implements OnInit {
     var telefono = this.editProfileForm.get('telefono');
     var imagen = this.editProfileForm.get('imagen');
 
-    /*console.log("FOTO SUBIDA: " + imagen?.value);
-    if (this.url == "") {
-      this.onUpload();
-    } else {
-      this.url = imagen?.value;
-    }*/
-
     if (nombre) formData.append("nombre", nombre.value);
     if (apellidos) formData.append("apellidos", apellidos.value);
     if (email) formData.append("email", email.value);
     if (telefono) formData.append("telefono", telefono.value);
-    if (this.url == "") {
-      this.onUpload();
-      formData.append("imagen", this.url);
-    } else if (this.url != "") {
+
+    if (imagen?.value instanceof File) {
+      formData.append("imagen", url_upload.replace(/\//gm, "%2F"));
+    } else if(this.url != ""){
       formData.append("imagen", this.url);
     } else {
       formData.append("imagen", imagen?.value);
     }
-    //if (imagen) formData.append("imagen", imagen?.value);
-
-
 
     formData.forEach((value, key) => {
       console.log(key + " " + value)
@@ -121,10 +140,9 @@ export class ProfileComponent implements OnInit {
       next: (x) => {
         alert(this.missatge);
         window.location.reload();
-      }, // Per debuguer
+      },
       error: (error) => {
-        alert('Error: ' + error.message);
-        // podriem treure l'error a html
+        console.log(error.message);
       }
     });
 
@@ -172,31 +190,7 @@ export class ProfileComponent implements OnInit {
   borrarImagen() {
     document.getElementById("imgperfil")?.setAttribute("src", "https://res.cloudinary.com/inmoanuncios/image/upload/v1651686755/perfil_inmoanuncios_cloudinary/sinfotoperfil_iryooh.png");
     this.url = "https://res.cloudinary.com/inmoanuncios/image/upload/v1651686755/perfil_inmoanuncios_cloudinary/sinfotoperfil_iryooh.png";
+    document.getElementById("boton-inmo")?.removeAttribute("disabled");
   }
-
-  onUpload() {
-
-    //const file_data =  this.editProfileForm.get('imagen');
-    const data = new FormData();
-    data.append('file', this.imagen_valor);
-    data.append('upload_preset', 'inmoanuncios_cloudinary');
-    data.append('cloud_name', 'inmoanuncios');
-
-    data.forEach((value, key) => {
-      console.log(key + " " + value)
-    });
-
-    this._uploadService.uploadImage(data).subscribe({
-      next: (x) => {
-        console.log("URL SUBIDO: " + x.url);
-        this.url = x.url;
-      }, // Per debuguer
-      error: (error) => {
-        console.log('Error: ' + error.message);
-        // podriem treure l'error a html
-      }
-    });
-  }
-
 
 }

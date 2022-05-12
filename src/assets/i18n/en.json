@@ -4,6 +4,7 @@
   "navbar.signin": "Sign In",
   "navbar.signout": "Sign Out",
   "navbar.profile": "Profile",
+  "navbar.admin": "Management control",
   "form.name": "Name",
   "form.surname": "Surname",
   "form.nickname": "Nickname",

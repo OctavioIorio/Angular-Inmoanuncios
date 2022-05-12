@@ -55,4 +55,8 @@ export class DataAnunciosService {
   public postAnuncio(formData: FormData): Observable<any> {
     return this._http.post(`${this.apiUrl}/api/anuncio`, formData);
   }
+
+  public deleteAnuncio(id:number): Observable<any> {
+    return this._http.delete(`${this.apiUrl}/api/anuncio/`+ id);
+  }
 }

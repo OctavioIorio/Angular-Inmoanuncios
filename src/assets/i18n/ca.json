@@ -4,6 +4,7 @@
   "navbar.signin": "Iniciar sessió",
   "navbar.signout": "Tancar sessió",
   "navbar.profile": "Perfill",
+  "navbar.admin": "Control d'administració",
   "form.name": "Nom",
   "form.surname": "Cognoms",
   "form.nickname": "Sobrenom",
