@@ -1,0 +1,20 @@
+.navbar {
+    background-color: #22333B !important;
+    color: #F2F4F3;
+}
+
+.navbar * {
+    color: #F2F4F3;
+}
+
+.navbar *:hover {
+    color: #d7d8d7;
+}
+
+:host /deep/ .mat-select-value-text {
+    color: #F2F4F3 !important;
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 2px #faf9f4);
+}

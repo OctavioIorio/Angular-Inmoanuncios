@@ -47,12 +47,21 @@ export class DataAnunciosService {
     return result;
   }
 
+  // getLatLng(municipio: string, provincia: string, calle: string, num: number, cp: number) {
+  //   let apiKey = '9461f1f9a3766f44b90bdffd4466830a';
+  //   return this._http.get(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${calle}${num}${cp}${municipio}${provincia}`)
+  // }
+
   getLatLng(municipio: string, provincia: string, calle: string, num: number, cp: number) {
-    let apiKey = '9461f1f9a3766f44b90bdffd4466830a';
-    return this._http.get(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${calle}${num}${cp}${municipio}${provincia}`)
+    return this._http.get(`https://nominatim.openstreetmap.org/?addressdetails=1&q=${calle}${num}${cp}${municipio}${provincia}&format=json&limit=1`)
   }
 
   public postAnuncio(formData: FormData): Observable<any> {
     return this._http.post(`${this.apiUrl}/api/anuncio`, formData);
+  }
+
+  contactarVendedor(data: Object): Observable<any> {
+    let result = this._http.post<any>(`${this.apiUrl}/api/contactar-vendedor`, data);
+    return result;
   }
 }

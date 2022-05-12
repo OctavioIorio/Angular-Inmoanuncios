@@ -27,6 +27,8 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.app.getCookie()) this.route.navigate(['login']);
+    
     this.valor_cookie = this.app.getCookie();
     this.getDatosUsuarios(this.valor_cookie);
   }

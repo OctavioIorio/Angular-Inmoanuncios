@@ -1,39 +1,82 @@
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-sm border" *ngIf="anuncio">
-            <img src="{{anuncio.imagen}}" onerror="this.src = 'assets/casa.png'" class="img-fluid" alt="adImg-{{anuncio.referencia}}">
-            <p>{{anuncio.tipo?.nombre}} en {{anuncio.trato}} en {{anuncio.municipio?.nombre}}</p>
-            <p>{{anuncio.cp}}, {{anuncio.municipio?.nombre}}, {{anuncio.provincia?.nombre}}</p>
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8 border" *ngIf="anuncio">
+            <!-- <img src="{{anuncio.imagen}}" onerror="this.src = 'assets/casa.png'" class="img-fluid w-100" alt="adImg-{{anuncio.referencia}}"> -->
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?cs=srgb&dl=pexels-pixabay-60597.jpg&fm=jpg"
+                            class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images3.alphacoders.com/954/thumbbig-954241.jpg" class="d-block w-100"
+                            alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/faa48d2d-12c2-43d1-bf23-b5e99857825b/df0qcbg-31dfc7f5-dab9-4101-85fe-1b124f319219.jpg/v1/fill/w_622,h_350,q_70,strp/dream_in_colors_by_ellysiumn_df0qcbg-350t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZhYTQ4ZDJkLTEyYzItNDNkMS1iZjIzLWI1ZTk5ODU3ODI1YlwvZGYwcWNiZy0zMWRmYzdmNS1kYWI5LTQxMDEtODVmZS0xYjEyNGYzMTkyMTkuanBnIiwiaGVpZ2h0IjoiPD00NTAiLCJ3aWR0aCI6Ijw9ODAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd21cL2ZhYTQ4ZDJkLTEyYzItNDNkMS1iZjIzLWI1ZTk5ODU3ODI1YlwvZWxseXNpdW1uLTQucG5nIiwib3BhY2l0eSI6OTUsInByb3BvcnRpb25zIjowLjQ1LCJncmF2aXR5IjoiY2VudGVyIn19.09GrLTfKzPVtwVCPYdghIuqx7wFUjBnE7KCty5iljpY"
+                            class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <span>
+                <h1>{{tipoTrans(anuncio.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
+                    {{tipoTrans(anuncio.trato) |
+                    translate}} {{'ad.in' | translate}} {{anuncio.municipio?.nombre}}</h1>
+            </span>
+            <p class="direccion"><span *ngIf="anuncio.cp">{{anuncio.cp}}, </span>{{anuncio.municipio?.nombre}},
+                {{anuncio.provincia?.nombre}}</p>
             <p>{{anuncio.precio}} €</p>
-            <p>{{anuncio.area}} m² {{anuncio.habitaciones}} hab.</p>
-            <div>{{anuncio.descripcion}}</div>
+            <p>{{anuncio.area}} m² {{anuncio.habitaciones}} {{'ad.rooms' | translate}}</p>
+            <mat-divider class="my-3"></mat-divider>
+            <p>{{anuncio.descripcion}}</p>
         </div>
-        <div class="col-4 border">
-
-            <google-map *ngIf="latLng; else elseBlock" width="100%" height="300px" [center]="latLng" [zoom]="15">
-                <map-marker #marker [position]="latLng" [title]="label"></map-marker>
-            </google-map>
-            <ng-template #elseBlock>
-                <div style="height: 300px !important;" class="d-flex justify-content-center align-items-center">
-                    <div class="spinner-border" style="width: 3rem; height: 3rem; color: seagreen; border-width: 0.5rem;"></div>
+        <div class="col col-md-4">
+            <div class="contactoContainer border">
+                <google-map *ngIf="latLng; else elseBlock" width="100%" height="300px" [center]="latLng" [zoom]="15">
+                    <map-marker #marker [position]="latLng" [title]="label"></map-marker>
+                </google-map>
+                <ng-template #elseBlock>
+                    <div style="height: 300px !important;" class="d-flex justify-content-center align-items-center">
+                        <div class="spinner-border"
+                            style="width: 3rem; height: 3rem; color: seagreen; border-width: 0.5rem;"></div>
+                    </div>
+                </ng-template>
+                <div class="contactoDatos p-3">
+                    <p *ngIf="vendedor" class="phone"><i class="fa fa-phone"></i>{{phoneSeparator(vendedor!.telefono)}}
+                    </p>
+                    <p>Vendedor</p>
+                    <p>{{vendedor?.nombre}} {{vendedor?.apellidos}}</p>
+                    <p>Referencia</p>
+                    <p>{{anuncio?.referencia}}</p>
                 </div>
-            </ng-template>
-            <p>
-                <mat-icon matSuffix>phone</mat-icon>{{vendedor?.telefono}}
-            </p>
-            <p>Vendedor</p>
-            <p>{{vendedor?.nombre}} {{vendedor?.apellidos}}</p>
-            <p>Referencia</p>
-            <p>{{anuncio?.referencia}}</p>
-            <form>
-                <mat-form-field class="w-100" appearance="fill">
-                    <mat-label>Contacta con el vendedor</mat-label>
-                    <textarea matInput placeholder="Estoy interesado en..."></textarea>
-                </mat-form-field>
-                <div>
-                    <button mat-raised-button color="primary" type="submit">Contactar</button>
+                <div class="d-flex flex-column p-2">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>{{'ad.msg' | translate}}</mat-label>
+                        <textarea [(ngModel)]="msgContacto" matInput
+                            placeholder="{{'ad.msgph' | translate}}"></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" class="w-100" (click)="this.contactarVendedor();"
+                        type="submit">{{'ad.contact' | translate}}</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -41,4 +84,4 @@
 
 
 <br>
-<a [routerLink]="['/ad-list']">Volver</a>
+<a [routerLink]="['/ad-list/'+this.anuncio?.municipio_id]">Volver</a>

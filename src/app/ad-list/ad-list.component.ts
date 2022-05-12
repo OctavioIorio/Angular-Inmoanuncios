@@ -25,7 +25,10 @@ export class AdListComponent implements OnInit {
   anuncios: IAnuncio[] = [];
   pageAnuncios: IAnuncio[] = [];
   tipos: ITipo[] = [];
-  tratos: string[] = ['Alquiler', 'Venta'];
+  tratos: any[] = [
+    { nombre: 'adlist.rent', valor: 'Alquiler' },
+    { nombre: 'adlist.sale', valor: 'Venta' }
+  ];
 
   // Filter anuncios
   tipoSelected: number = 0;
@@ -83,10 +86,20 @@ export class AdListComponent implements OnInit {
   }
 
   ellipsisDesc(desc: string) {
-    if (desc.length > 150) {
+    if (desc?.length > 150) {
       return desc.substring(0, 150) + '...';
     }
     return desc;
   };
+
+  tipoTrans(tipo: any) {
+    switch (tipo) {
+      case "Piso": return "adlist.floor";
+      case "Casa": return "adlist.house";
+      case "Alquiler": return "adlist.rent";
+      case "Venta": return "adlist.sale";
+      default: return "";
+    }
+  }
 
 }

@@ -12,6 +12,8 @@ import { IMap } from '../interfaces/imap';
 
 import { DataAnunciosService } from '../services/data-anuncios.service';
 import { DataMapService } from '../services/data-map.service';
+import { AppComponent } from '../app.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ad',
@@ -22,6 +24,7 @@ export class AdComponent implements OnInit {
 
   apiUrl: string = environment.apiUrl;
   errorMessage: string = "";
+  msgContacto: string = "";
   id = Number(this.aroute.snapshot.params['id']);
 
   anuncio?: IAnuncio;
@@ -30,13 +33,14 @@ export class AdComponent implements OnInit {
   // Maps
   map!: IMap;
   errorMessageMap: string = "";
-  
+
   latLng!: google.maps.LatLngLiteral;
   label = "";
 
   marker!: google.maps.MarkerOptions;
-  
-  constructor(private anuncioService: DataAnunciosService, private mapService: DataMapService, private route: Router, private aroute: ActivatedRoute) { }
+
+  constructor(private anuncioService: DataAnunciosService, private mapService: DataMapService, private route: Router, private aroute: ActivatedRoute,
+    private app: AppComponent, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.anuncioService.getAnuncio(this.id).subscribe((anuncio: IAnuncio) => {
@@ -74,7 +78,53 @@ export class AdComponent implements OnInit {
     }, (error) => {
       this.errorMessage = error.message;
     });
-    
+
+  }
+
+  contactarVendedor() {
+    if (!this.app.getCookie()) {
+      let sb = this._snackBar.open("Debes de iniciar sesión.", "Login", {
+        duration: 5000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom'
+      });
+
+      sb.onAction().subscribe(() => {
+        this.route.navigate(['login']);
+      });
+
+      return false;
+    }
+
+    if (this.msgContacto.length > 0) {
+      const dataContacto: Object = { msg: this.msgContacto, idComprador: this.app.getCookie(), idAnuncio: this.anuncio?.id, url: window.location.href };
+      this.anuncioService.contactarVendedor(dataContacto).subscribe({
+        error: (error) => { this.errorMessage = error.message; }
+      });
+
+      this._snackBar.open("Mensaje enviado.", "Cerrar", {
+        duration: 5000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom'
+      });
+    }
+    return true;
+  }
+
+  tipoTrans(tipo: any) {
+    switch (tipo) {
+      case "Piso": return "adlist.floor";
+      case "Casa": return "adlist.house";
+      case "Alquiler": return "adlist.rent";
+      case "Venta": return "adlist.sale";
+      default: return "";
+    }
+  }
+
+  phoneSeparator(numb: number) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return str.join(".");
   }
 
 }

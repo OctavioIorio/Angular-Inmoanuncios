@@ -5,31 +5,31 @@
                 <div class="container pt-4 d-flex flex-column border">
                     <!-- <span>Tipo de inmueble</span><br> -->
                     <mat-form-field appearance="fill">
-                        <mat-label>Tipo de inmueble</mat-label>
+                        <mat-label>{{'adlist.selectPropertyType' | translate}}</mat-label>
                         <mat-select [(ngModel)]="tipoSelected" [(value)]="tipoSelected">
-                            <mat-option>Todos</mat-option>
+                            <mat-option>{{'adlist.all' | translate}}</mat-option>
                             <div *ngFor="let tipo of tipos">
-                                <mat-option [value]="tipo.id">{{tipo.nombre}}</mat-option>
+                                <mat-option [value]="tipo.id">{{tipoTrans(tipo.nombre) | translate}}</mat-option>
                             </div>
                         </mat-select>
                     </mat-form-field><br>
 
-                    <span>Tipo de trato</span><br>
-                    <mat-radio-group [(ngModel)]="tratoSelected" aria-label="Selecciona tipo de trato">
-                        <mat-radio-button value="">Todos</mat-radio-button>
+                    <span>{{'adlist.selectPropertyDeal' | translate}}</span><br>
+                    <mat-radio-group class="mb-3" [(ngModel)]="tratoSelected" aria-label="Selecciona tipo de trato">
+                        <mat-radio-button value="">{{'adlist.all' | translate}}</mat-radio-button>
                         <div *ngFor="let trato of tratos">
-                            <mat-radio-button [value]="trato">{{trato}}</mat-radio-button>
+                            <mat-radio-button [value]="trato.valor">{{trato.nombre | translate}}</mat-radio-button>
                         </div>
                     </mat-radio-group><br>
 
                     <!-- <span>Precio</span> -->
                     <div class="d-flex flex-column">
                         <mat-form-field>
-                            <input type="number" [(ngModel)]="precioMin" matInput placeholder="Precio mín.">
+                            <input type="number" [(ngModel)]="precioMin" matInput [placeholder]="'adlist.minPrice' | translate">
                             <span matSuffix>€</span>
                         </mat-form-field>
                         <mat-form-field>
-                            <input type="number" [(ngModel)]="precioMax" matInput placeholder="Precio máx.">
+                            <input type="number" [(ngModel)]="precioMax" matInput [placeholder]="'adlist.maxPrice' | translate">
                             <span matSuffix>€</span>
                         </mat-form-field>
                     </div>
@@ -37,27 +37,27 @@
                     <!-- <span>Área</span> -->
                     <div class="d-flex flex-column">
                         <mat-form-field>
-                            <input type="number" [(ngModel)]="areaMin" matInput placeholder="Área mín.">
+                            <input type="number" [(ngModel)]="areaMin" matInput [placeholder]="'adlist.maxArea' | translate">
                             <span matSuffix>m²</span>
                         </mat-form-field>
                         <mat-form-field>
-                            <input type="number" [(ngModel)]="areaMax" matInput placeholder="Área máx.">
+                            <input type="number" [(ngModel)]="areaMax" matInput [placeholder]="'adlist.maxArea' | translate">
                             <span matSuffix>m²</span>
                         </mat-form-field>
                     </div>
-                    <span>Habitaciones</span>
+                    <span>{{'adlist.radioRooms' | translate}}</span>
                     <mat-radio-group [(ngModel)]="habitaciones" class="d-flex flex-column"
                         aria-label="Selecciona número de habitaciones">
-                        <mat-radio-button [checked]="true">Todos</mat-radio-button>
+                        <mat-radio-button [checked]="true">{{'adlist.all' | translate}}</mat-radio-button>
                         <mat-radio-button value="1">1</mat-radio-button>
                         <mat-radio-button value="2">2</mat-radio-button>
                         <mat-radio-button value="3">3</mat-radio-button>
-                        <mat-radio-button value="4">4 o más</mat-radio-button>
+                        <mat-radio-button value="4">4 {{'adlist.more' | translate}}</mat-radio-button>
                     </mat-radio-group>
 
                     <!-- <span>Referencia</span><br> -->
-                    <mat-form-field hintLabel="10 carácteres máximos">
-                        <input [(ngModel)]="referencia" matInput #refe placeholder="Referencia" maxlength="10">
+                    <mat-form-field hintLabel="{{'adlist.maxRefChars' | translate}}">
+                        <input [(ngModel)]="referencia" matInput #refe placeholder="{{'adlist.reference' | translate}}" maxlength="10">
                         <mat-hint align="end">{{refe.value?.length || 0}}/{{refe.maxLength}}</mat-hint>
                     </mat-form-field>
                 </div>
@@ -79,7 +79,7 @@
                                     class="card-img-top imagen" alt="adImg-{{anuncio.referencia}}">
                             </a>
                             <div class="card-body">
-                                <h2 class="card-title">{{anuncio.tipo?.nombre}} en {{anuncio.trato}}</h2>
+                                <h2 class="card-title">{{tipoTrans(anuncio.tipo?.nombre) | translate}} {{'adlist.for' | translate}} {{tipoTrans(anuncio.trato) | translate}}</h2>
                                 <p class="card-text"><span *ngIf="anuncio.cp">{{anuncio.cp}},
                                     </span>{{anuncio.municipio?.nombre}},
                                     {{anuncio.provincia?.nombre}}</p>

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { IAnuncio } from '../interfaces/ianuncio';
 import { ITipo } from '../interfaces/itipo';
@@ -14,6 +16,8 @@ import { IGeneral } from '../interfaces/igeneral';
 import { DataAnunciosService } from '../services/data-anuncios.service';
 import { DataTiposService } from '../services/data-tipos.service';
 import { DataMunicipiosService } from '../services/data-municipios.service';
+import { HomeComponent } from '../home/home.component';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-ad-form',
@@ -30,7 +34,10 @@ export class AdFormComponent implements OnInit {
   tipos: ITipo[] = [];
   provincias: IProvincia[] = [];
   municipios: IMunicipio[] = [];
-  tratos: string[] = ['Alquiler', 'Venta'];
+  tratos: any[] = [
+    { nombre: 'adlist.rent', valor: 'Alquiler' },
+    { nombre: 'adlist.sale', valor: 'Venta' }
+  ];
   missatge = '';
   images: string[] = [];
   imagesF: string[] = [];
@@ -51,7 +58,9 @@ export class AdFormComponent implements OnInit {
   filteredProvincias!: Observable<IProvincia[]>;
 
   constructor(private formBuilder: FormBuilder, private anuncioService: DataAnunciosService,
-    private tipoService: DataTiposService, private municipioService: DataMunicipiosService, private route: Router) {
+    private tipoService: DataTiposService, private municipioService: DataMunicipiosService,
+    private route: Router, public dialogRef: MatDialogRef<AdFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { user: string }, private _snackBar: MatSnackBar) {
     this.myForm = this.createForm();
   }
 
@@ -79,7 +88,6 @@ export class AdFormComponent implements OnInit {
       this.municipios = municipios.sort((a, b) => a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase()))
 
       // Autocomplete Municipios
-      // this.filteredMunicipios = this.myControl.valueChanges.pipe(
       this.filteredMunicipios = this.munisFiltered();
     });
   }
@@ -106,7 +114,6 @@ export class AdFormComponent implements OnInit {
         var reader = new FileReader();
 
         reader.onload = (event: any) => {
-          // console.log(event.target.result);
           this.images.push(event.target.result);
 
           this.myForm.patchValue({
@@ -189,8 +196,8 @@ export class AdFormComponent implements OnInit {
 
     if (this.imagesF.length > 0) formData.append("imagen", this.imagesF[0]);
     formData.append("referencia", this.randomReferencia());
-    formData.append("vendedor_id", "3");
-    let cDate = new Date(); formData.append("created_at", `${cDate.getFullYear()}-${('0' + (cDate.getMonth() + 1)).slice(-2)}-${('0' + cDate.getDate()).slice(-2)}`);
+    formData.append("vendedor_id", this.data.user);
+    let cDate = new Date(); formData.append("created_at", `${cDate.getFullYear()}-${('0' + (cDate.getMonth() + 1)).slice(-2)}-${('0' + cDate.getDate()).slice(-2)} ${('0' + cDate.getHours()).slice(-2)}:${('0' + cDate.getMinutes()).slice(-2)}:${('0' + cDate.getSeconds()).slice(-2)}`);
     if (municipio_id) formData.append("municipio_id", municipio_id.value.id);
     if (cp) formData.append("cp", cp.value);
     if (precio) formData.append("precio", precio.value);
@@ -200,14 +207,16 @@ export class AdFormComponent implements OnInit {
     if (area) formData.append("area", area.value);
     if (descripcion) formData.append('descripcion', descripcion.value);
     if (calle) formData.append("calle", calle.value);
-    if (num) { console.log("Num: " + num.value); formData.append("num", num.value); }
+    if (num) formData.append("num", num.value);
 
     console.log(formData);
 
     this.anuncioService.postAnuncio(formData).subscribe({
       next: (res) => {
         console.log(res);
-        this.route.navigate(['home']);
+        // this.route.navigate(['home']);
+        this.dialogRef.close();
+        this.openSnackBar();
       },
       error: (error) => { this.errorMessage = error.message; }
     });
@@ -260,6 +269,14 @@ export class AdFormComponent implements OnInit {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
+  }
+
+  openSnackBar() {
+    this._snackBar.open("Anuncio creado", "Cerrar", {
+      duration: 5000,
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom'
+    });
   }
 
 }

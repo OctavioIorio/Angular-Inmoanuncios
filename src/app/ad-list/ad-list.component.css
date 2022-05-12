@@ -13,7 +13,11 @@
 }
 
 .filtros {
-    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 30px;
+    height: 0;
+    background-color: white;
 }
 
 @media (max-width: 1000px) {
@@ -26,4 +30,9 @@
     .filtros {
         position: relative;
     }
+}
+
+.mat-paginator {
+    background-color: #2a363b;
+    color: white;
 }

@@ -21,5 +21,8 @@
   border-radius: 1em;
   padding: 1%;
   border: 1px dashed black;
+}
 
+.listImages {
+  height: 100px;
 }

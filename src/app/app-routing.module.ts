@@ -11,9 +11,9 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
-  { path: 'ad-list', component: AdListComponent },
+  // { path: 'ad-list', component: AdListComponent },
   { path: 'ad-list/:mun_id', component: AdListComponent },
-  { path: 'ad-form', component: AdFormComponent },
+  // { path: 'ad-form', component: AdFormComponent },
   { path: 'ad/:id', component: AdComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

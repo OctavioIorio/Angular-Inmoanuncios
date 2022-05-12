@@ -1,7 +1,7 @@
 <div class="Navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand me-auto" [routerLink]="['home']"><img src="assets/yospace-logo.svg" class="img-fluid"
+            <a class="navbar-brand me-auto" [routerLink]="['home']"><img src="assets/yospace-logo.svg" class="img-fluid logo"
                     width="50px" alt="logo-footer" /><span class="mt-1">Inmoanuncios</span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -9,44 +9,45 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2">
                     <!-- <li class="nav-item">
                         <a class="nav-link" [routerLink]="['home']">Home</a>
                     </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['ad-form']">Publicar</a>
-                    </li>
 
                     <!-- EMPIEZA IF -->
                     <ng-template [ngIf]="valor_cookie == ''" [ngIfElse]="loggedOut">
-                      <li class="nav-item me-md-2">
-                        <a class="nav-link" [routerLink]="['login']">{{'navbar.signin' | translate}}</a>
-                      </li>
+                        <li class="nav-item me-md-2">
+                            <a class="nav-link" [routerLink]="['login']">{{'navbar.signin' | translate}}</a>
+                        </li>
                     </ng-template>
 
                     <ng-template #loggedOut>
-                      <li class="nav-item me-md-2">
-                        <a class="nav-link" [routerLink]="['home']" (click)="signOut()">{{'navbar.signout' | translate}}</a>
-                      </li>
-                      <li class="nav-item me-md-2">
-                        <a class="nav-link" [routerLink]="['profile']">{{'navbar.profile' | translate}}</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['ad-form']">Publicar</a>
-                    </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['ad-form']">{{'navbar.publish' | translate}}</a>
+                        </li> -->
+                        <li><button class="border" mat-button (click)="openDialog()">{{'navbar.publish' | translate}} <i
+                                    class="fa-solid fa-location-dot"></i></button></li>
+                        <li class="nav-item me-md-2">
+                            <a mat-button class="nav-link" [routerLink]="['home']"
+                                (click)="signOut()">{{'navbar.signout' |
+                                translate}}</a>
+                        </li>
+                        <li class="nav-item me-md-2">
+                            <a mat-button class="nav-link" [routerLink]="['profile']">{{'navbar.profile' |
+                                translate}}</a>
+                        </li>
                     </ng-template>
                     <!-- ACABA IF -->
 
-                    <li class="nav-item mt-1">
-                        <mat-form-field appearance="fill" style="width: 100px;">
-                            <!-- <mat-label>Idioma</mat-label> -->
+                    <li class="nav-item mt-1" class="d-flex align-items-center">
+                        <div appearance="fill" class="lngSelect">
                             <mat-select [value]="lng.value" (selectionChange)="switchLang($event)">
-                                <mat-option *ngFor="let lng of lngs" [value]="lng.value">
+                                <mat-option class="lngOption" *ngFor="let lng of lngs" [value]="lng.value">
                                     <img style="width:25px;height:20px;" src="{{lng.img}}" alt="{{lng.label}}-img">
                                     {{lng.label}}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </div>
                     </li>
                 </ul>
             </div>

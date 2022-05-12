@@ -26,7 +26,13 @@ export class UsuariosService {
     return this._http.get(`${this.apiUrl}/api/general/`+ id);
   }
 
-  public editUsuarioGenConcreto(id:number, datos:any): Observable<any> {
-    return this._http.put<IGeneral>(`${this.apiUrl}/api/general/`+ id, datos);
+  // public editUsuarioGenConcreto(id:number, datos:any): Observable<any> {
+  //   return this._http.put<IGeneral>(`${this.apiUrl}/api/general/`+ id, datos);
+  // }
+
+  public editUsuarioGenConcreto(id:number, formdata:FormData): Observable<any> {
+    // return this._http.put<IGeneral>(`${this.apiUrl}/api/general/`+ id, datos);
+
+    return this._http.put<IGeneral>(`${this.apiUrl}/api/general/`+ id, formdata,);
   }
 }

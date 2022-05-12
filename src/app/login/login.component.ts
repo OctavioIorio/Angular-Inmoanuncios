@@ -72,7 +72,6 @@ export class LoginComponent implements OnInit {
           });
       } else {
         this.myNameElem.nativeElement.classList.remove("no-visible");
-        //console.log("Resultado: " + false);
       }
     }
   }

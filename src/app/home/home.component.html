@@ -3,7 +3,7 @@
         class="border form p-3 container-fluid d-flex justify-content-center align-items-center gap-2">
         <div class="home-provincias" appearance="fill">
             <!-- <mat-label>Provincia</mat-label> -->
-            <input type="text" placeholder="Escoge provincia" matInput [formControl]="myControl"
+            <input type="text" [placeholder]="'home.selectProv' | translate" matInput [formControl]="myControl"
                 [matAutocomplete]="autoProvincia" (blur)="this.filteredMunicipios=munisFiltered()">
             <mat-autocomplete #autoProvincia="matAutocomplete" [displayWith]="displayFnProv.bind(this)">
                 <mat-option *ngFor="let provincia of filteredProvincias | async" [value]="provincia.id" id="prov-form">
@@ -16,7 +16,7 @@
         </div>
         <div class="home-municipios" appearance="fill">
             <!-- <mat-label>Municipio</mat-label> -->
-            <input type="text" placeholder="Escoge municipio" matInput formControlName="municipio_id"
+            <input type="text" [placeholder]="'home.selectMun' | translate" matInput formControlName="municipio_id"
                 [matAutocomplete]="autoMunicipio">
             <mat-autocomplete #autoMunicipio="matAutocomplete" [displayWith]="displayFnMun">
                 <mat-option *ngFor="let municipio of filteredMunicipios | async" [value]="municipio">
@@ -28,6 +28,6 @@
             </mat-error> -->
         </div>
         <!-- <a mat-raised-button class="button home-button" [disabled]="!myForm.valid" routerLink="/ad-list/{{this.myForm.get('municipio_id')?.value?.id}}">Buscar</a> -->
-        <button  type="submit" class="btn btn-light home-button" [disabled]="!myForm.valid">Buscar</button>
+        <button  type="submit" class="btn btn-light home-button" [disabled]="!myForm.valid">{{'home.search' | translate}}</button>
     </form>
 </main>
