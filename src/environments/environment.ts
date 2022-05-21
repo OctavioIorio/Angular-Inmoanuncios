@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost/daw/m14/Inmoanuncios/API-Inmoanuncios/public/index.php' || 'http://localhost/2021-2022/M14/proyecto/API-Inmoanuncios/public/index.php',
+  apiUrl: 'http://localhost/2021-2022/M14/proyecto/API-Inmoanuncios/public/index.php',
   recaptcha: {
-    siteKey: '6LdbaJ0fAAAAAHkuGD6sVeymW20qS1up9jdbXdjX',
+    siteKey: '6LensOgfAAAAAFApP7Ci_Dxzgs47rxn-aQfh-kTH',
   },
 };
 

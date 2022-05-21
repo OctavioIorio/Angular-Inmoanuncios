@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>Editar perfil</h2>
+<form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-dialog-content class="mat-typography">
+    <div class="container-fluid">
+      <img class="rounded mx-auto d-block" id="imgdialog" width="200px" alt="profile">
+      <div class="d-flex justify-content-center my-3">
+        <button type="button" class="btn btn-success me-3" (click)="selecImagen()">{{'profile.change' | translate}} &nbsp;<i class="fa-solid fa-check"></i></button>
+        <button type="button" class="btn btn-danger ms-3" (click)="borrarImagen()">{{'profile.remove' | translate}} &nbsp;<i class="fa-solid fa-x"></i></button>
+      </div>
+      <div id="verimagen" class="d-none">
+        <label for="imagen" class="form-label">{{'form.photo' | translate}} &nbsp;</label>
+        <input type="file" id="imagen" class="form-control" formControlName="imagen" (change)="onFileSelect($event)">
+          <span *ngIf="noValid('imagen')" class="error">
+              {{ getErrorMessage('imagen') }}
+          </span>
+      </div>
+    </div>
+    <div class="container-fluid mt-2">
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="form-element mb-2">
+            <label for="nombre" class="form-label">{{'form.name' | translate}} &nbsp;</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre">
+            <span *ngIf="noValid('nombre')" class="error">
+              {{ getErrorMessage('nombre') | translate }}
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-element mb-2">
+            <label for="apellidos" class="form-label">{{'form.surname' | translate}} &nbsp;</label>
+            <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
+            <span *ngIf="noValid('apellidos')" class="error">
+              {{ getErrorMessage('apellidos') | translate }}
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-element mb-2">
+            <label for="email" class="form-label">{{'form.email' | translate}} &nbsp;</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+            <span *ngIf="noValid('email')" class="error">
+              {{ getErrorMessage('email') | translate }}
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-element mb-2">
+            <label for="telefono" class="form-label">{{'form.phone' | translate}} &nbsp;</label>
+            <input type="tel" class="form-control" id="telefono" pattern="^([+]?\d{1,2}[-\s]?|)[9|6|7][0-9]{8}$"
+              formControlName="telefono">
+            <span *ngIf="noValid('telefono')" class="error">
+              {{ getErrorMessage('telefono') | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-raised-button type="submit" color="primary" class="button" [disabled]="!editProfileForm.valid">{{'form.buttonEditProfile' | translate}}</button>
+  </mat-dialog-actions>
+</form>
+

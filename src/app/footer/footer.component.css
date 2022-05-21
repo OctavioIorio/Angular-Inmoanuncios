@@ -1,0 +1,46 @@
+#footer {
+  background-color: #22333b;
+  color: #f2f4f3;
+}
+
+.logo,
+.icons,
+.ayudas {
+  color: #f2f4f3;
+}
+
+.ayudas:hover{
+  color: #d7d8d7;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2px #faf9f4);
+}
+
+.inmo * {
+  color: #f2f4f3;
+}
+
+.inmo *:hover{
+  color: #d7d8d7;
+}
+
+.instagram:hover {
+  color: #d6249f;
+  transition: 0.3s;
+}
+
+.facebook:hover {
+  color: #3b5998;
+  transition: 0.3s;
+}
+
+.twitter:hover {
+  color: #00acee;
+  transition: 0.3s;
+}
+
+.github:hover {
+  color: #6e6e6d;
+  transition: 0.3s;
+}

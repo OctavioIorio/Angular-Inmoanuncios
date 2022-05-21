@@ -64,8 +64,13 @@ export class DataAnunciosService {
     let result = this._http.post<any>(`${this.apiUrl}/api/contactar-vendedor`, data);
     return result;
   }
-  
+
   public deleteAnuncio(id:number): Observable<any> {
     return this._http.delete(`${this.apiUrl}/api/anuncio/`+ id);
+  }
+
+  getTipo(id: number): Observable<ITipo> {
+    let result = this._http.get<ITipo>(`${this.apiUrl}/api/tipo/${id}`);
+    return result;
   }
 }

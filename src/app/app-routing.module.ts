@@ -9,6 +9,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
+import { TerminosComponent } from './terminos/terminos.component';
+import { CookieComponent } from './cookie/cookie.component';
+import { LegalComponent } from './legal/legal.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -20,6 +23,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'terminos', component: TerminosComponent },
+  { path: 'cookies', component: CookieComponent },
+  { path: 'legal', component: LegalComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];

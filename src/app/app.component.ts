@@ -9,6 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AppComponent {
   title = 'Inmoanuncios';
   cookieValue = '';
+  cookieLang = '';
 
   constructor(public cookieService: CookieService) {
   }
@@ -24,6 +25,19 @@ export class AppComponent {
 
   removeCookie() {
     this.cookieService.delete('user');
+  }
+
+  saveAdmin(value:any){
+    this.cookieService.set('admin', value);
+  }
+
+  getAdmin(){
+    this.cookieValue = this.cookieService.get('admin');
+    return this.cookieValue;
+  }
+
+  removeAdmin() {
+    this.cookieService.delete('admin');
   }
 
 }

@@ -1,4 +1,4 @@
-<div id="contenido-registro" class="p-5">
+<div id="contenido-registro" class="p-5 h-auto">
   <div id="contenido-formulario" class="container p-5">
     <div id="titulo" class="mx-auto text-center">
       <img src="assets/yospace-logo.svg" class="ms-4 mx-auto" width="100px" alt="foto-logo-login" />
@@ -9,10 +9,10 @@
         <div class="row w-75 d-flex justify-content-center mx-auto">
           <div class="col-12 w-100">
             <div class="form-element mb-3">
-              <label for="nombre" class="form-label">Nombre &nbsp;</label>
-              <input type="text" class="form-control" id="nombre" formControlName="nombre">
-              <span *ngIf="noValid('nombre')" class="error">
-                {{ getErrorMessage('nombre') }}
+              <label for="nickname" class="form-label">Nickname &nbsp;</label>
+              <input type="text" class="form-control" id="nickname" formControlName="nickname">
+              <span *ngIf="noValid('nickname')" class="error">
+                {{ getErrorMessage('nickname') }}
               </span>
             </div>
           </div>

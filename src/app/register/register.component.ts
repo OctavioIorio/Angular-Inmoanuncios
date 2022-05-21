@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, Valid
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { IRegister } from '../interfaces/iregister';
+import { UploadService } from '../services/upload.service';
 import { UsuariosService } from '../services/usuarios.service';
 @Component({
   selector: 'app-register',
@@ -20,8 +21,10 @@ export class RegisterComponent implements OnInit {
   pattern_password = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$";
   pattern_telefono = "^([+]?\d{1,2}[-\s]?|)[9|6|7][0-9]{8}$";
   errorPassword: string = "La contraseña debe tener al menos entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. NO puede tener otros símbolos";
+  imagen_valor: any;
+  info: any = new Object;
 
-  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent) {
+  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent, private _uploadService: UploadService) {
     this.registerForm = this.createForm();
   }
   //^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,16})\S$
@@ -60,20 +63,47 @@ export class RegisterComponent implements OnInit {
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
+      this.imagen_valor = file;
+      console.log("INFO: " + this.imagen_valor);
       this.registerForm.get('imagen')?.setValue(file);
+      //this.onUpload();
     }
   }
 
-  onSubmit() {
+  onUpload() {
 
-    console.log("Dentro: " + this.registerForm.valid);
+    const data = new FormData();
+    data.append('file', this.imagen_valor);
+    data.append('upload_preset', 'inmoanuncios_cloudinary');
+    data.append('cloud_name', 'inmoanuncios');
+
+    this._uploadService.uploadImage(data).subscribe(res => {
+      this.info = res;
+      console.log(this.info);
+      this.subscribeCreateUser();
+    });
+  }
+
+  onSubmit() {
 
     if (!this.registerForm.valid && this.match === false) {
       document.getElementById("boton-inmo")?.setAttribute("disabled", "");
       return;
     }
 
-    console.log("Entrando formu");
+    if (this.imagen_valor) {
+      console.log("Se ejecuta onupload");
+      this.onUpload();
+    } else {
+      this.subscribeCreateUser();
+    }
+
+  }
+
+  subscribeCreateUser(){
+
+    var url_upload = this.info.secure_url;
+    console.log(url_upload);
 
     const formData = new FormData();
 
@@ -91,7 +121,12 @@ export class RegisterComponent implements OnInit {
     if (apellidos) formData.append("apellidos", apellidos.value);
     if (email) formData.append("email", email.value);
     if (telefono) formData.append("telefono", telefono.value);
-    if (imagen) formData.append("imagen", imagen.value);
+    //if (imagen) formData.append("imagen", imagen.value);
+    if (imagen?.value instanceof File) {
+      formData.append("imagen", url_upload.replace(/\//gm, "%2F"));
+    } else {
+      formData.append("imagen", "https://res.cloudinary.com/inmoanuncios/image/upload/v1651686755/perfil_inmoanuncios_cloudinary/sinfotoperfil_iryooh.png");
+    }
 
     formData.forEach((value, key) => {
       console.log(key + " " + value)
@@ -102,7 +137,7 @@ export class RegisterComponent implements OnInit {
     this.usuariosService.postUsuario(formData).subscribe({
       next: (x) => {
         alert(this.missatge);
-        this.route.navigate(['../login']);
+        //this.route.navigate(['../login']);
       }, // Per debuguer
       error: (error) => {
         alert('Error: ' + error.message);

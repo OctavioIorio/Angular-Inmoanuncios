@@ -73,7 +73,7 @@
           <div class="col-12 col-lg-6">
             <div class="form-element mb-3">
               <label for="imagen" class="form-label">{{'form.photo' | translate}} &nbsp;</label>
-              <input type="file" class="form-control" id="imagen" formControlName="imagen">
+              <input type="file" class="form-control" id="imagen" formControlName="imagen" (change)="onFileSelect($event)">
               <span *ngIf="noValid('imagen')" class="error">
                 {{ getErrorMessage('imagen') | translate }}
               </span>

@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     return this.formBuilder.group({
-      nombre: [null, [Validators.required]],
+      nickname: [null, [Validators.required]],
       password: [null, [Validators.required]],
       recaptcha: [null, [Validators.required]]
     }
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 
     const formData = new FormData();
 
-    var nickname = this.loginForm.get('nombre');
+    var nickname = this.loginForm.get('nickname');
     var password = this.loginForm.get('password');
 
     if (nickname) formData.append("nickname", nickname.value);
@@ -65,7 +65,16 @@ export class LoginComponent implements OnInit {
     for (let i = 0; i < this.usuArray.length; i++) {
       const elem = this.usuArray[i];
       if (nickname?.value == elem.nickname && password?.value == elem.password) {
-        this.app.saveCookie(elem.id);
+        this.usuariosService.verificarAdmin(elem.id).subscribe((data: any) => {
+          if (data) {
+            this.app.saveAdmin("admin");
+          } else {
+            this.app.saveCookie(elem.id);
+          }
+        }, (error) => {
+          this.errorMessage = error.message; // treurem l'error a html
+        });
+
         this.route.navigate(['/home'])
           .then(() => {
             window.location.reload();
@@ -88,7 +97,7 @@ export class LoginComponent implements OnInit {
     if (!ctl) return 'Control Erroni';
     let str = '';
     switch (nControl) {
-      case 'nombre':
+      case 'nickname':
         str = ctl.hasError('required') ? 'Field is required' : '';
         break;
       case 'password':

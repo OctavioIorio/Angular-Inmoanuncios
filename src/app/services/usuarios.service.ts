@@ -37,4 +37,8 @@ export class UsuariosService {
   public deleteUsuarioGenConcreto(id:number): Observable<any> {
     return this._http.delete(`${this.apiUrl}/api/general/`+ id);
   }
+
+  public verificarAdmin(id:number): Observable<any> {
+    return this._http.get(`${this.apiUrl}/api/admin/`+ id);
+  }
 }

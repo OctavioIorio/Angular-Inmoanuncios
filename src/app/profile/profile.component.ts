@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.app.getCookie()) this.route.navigate(['login']);
-    
+
     this.valor_cookie = this.app.getCookie();
     this.getDatosUsuarios(this.valor_cookie);
     //document.getElementById("imgperfil")?.setAttribute("src", this.usuario.imagen.replace("%2F", "/"));
@@ -86,7 +86,7 @@ export class ProfileComponent implements OnInit {
       console.log("Se ejecuta onupload");
       this.onUpload();
     } else {
-      this.restainfo();
+      this.subscribeEditInfo();
     }
 
   }
@@ -101,12 +101,12 @@ export class ProfileComponent implements OnInit {
     this._uploadService.uploadImage(data).subscribe(res => {
       this.info = res;
       console.log(this.info);
-      this.restainfo();
+      this.subscribeEditInfo();
     });
+
   }
 
-  restainfo() {
-
+  subscribeEditInfo() {
 
     var url_upload = this.info.secure_url;
     console.log(url_upload);
