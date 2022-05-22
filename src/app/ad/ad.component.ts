@@ -17,6 +17,7 @@ import { DataMapService } from '../services/data-map.service';
 import { AppComponent } from '../app.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IFavorito } from '../interfaces/ifavorito';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ad',
@@ -45,7 +46,7 @@ export class AdComponent implements OnInit {
   marker!: google.maps.MarkerOptions;
 
   constructor(private anuncioService: DataAnunciosService, private mapService: DataMapService, private route: Router, private aroute: ActivatedRoute,
-    private app: AppComponent, private _snackBar: MatSnackBar, private usuariosService: UsuariosService) { }
+    private app: AppComponent, private _snackBar: MatSnackBar, private usuariosService: UsuariosService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.anuncioService.getAnuncio(this.id).subscribe((anuncio: IAnuncio) => {
@@ -128,7 +129,7 @@ export class AdComponent implements OnInit {
         error: (error) => { this.errorMessage = error.message; }
       });
 
-      this._snackBar.open("Mensaje enviado.", "Cerrar", {
+      this._snackBar.open(this.translate.instant('adDialogo.enviado'), this.translate.instant('adminDialogo.cerrar'), {
         duration: 5000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom'

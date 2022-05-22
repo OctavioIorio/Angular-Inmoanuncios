@@ -14,6 +14,7 @@ import { AppComponent } from '../app.component';
 import { AdEditComponent } from '../ad-edit/ad-edit.component';
 import { IProvincia } from '../interfaces/iprovincia';
 import { IMunicipio } from '../interfaces/imunicipio';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin',
@@ -42,7 +43,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() { }
 
-  constructor(private usuariosService: UsuariosService, private anunciosService: DataAnunciosService, public dialog: MatDialog, private _snackBar: MatSnackBar, private route: Router, private app: AppComponent) { }
+  constructor(private usuariosService: UsuariosService, private anunciosService: DataAnunciosService, public dialog: MatDialog, private _snackBar: MatSnackBar, private route: Router, private app: AppComponent, private translate: TranslateService) { }
 
   ngOnInit(): void {
     if (!this.app.getAdmin()) this.route.navigate(['login']);
@@ -130,7 +131,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   dialogoBorrarUsuario(id: number) {
     this.dialog
       .open(DialogoConfirmacionComponent, {
-        data: "¿Seguro que quieres eliminar este usuario? IMPORTANTE: Eliminar un usuario a la vez se elimina todo relacionando con él: anuncios, cuenta, etc."
+        data: "adminDialogo.borrarUsuario"
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
@@ -167,7 +168,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   dialogoBorrarAnuncio(id: number) {
     this.dialog
       .open(DialogoConfirmacionComponent, {
-        data: `¿Seguro que quieres borrar este anuncio?`
+        data: "adminDialogo.borrarAnuncio"
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
@@ -191,7 +192,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   notificacionUsuarioBorrado() {
-    this._snackBar.open("Usuario eliminado", "Cerrar", {
+    this._snackBar.open(this.translate.instant('adminDialogo.borradoUsuario'), this.translate.instant('adminDialogo.cerrar'), {
       duration: 5000,
       horizontalPosition: 'right',
       verticalPosition: 'bottom'
@@ -199,7 +200,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   notificacionAnuncioBorrado() {
-    this._snackBar.open("Anuncio borrado", "Cerrar", {
+    this._snackBar.open(this.translate.instant('adminDialogo.borradoAnuncio'), this.translate.instant('adminDialogo.cerrar'), {
       duration: 5000,
       horizontalPosition: 'right',
       verticalPosition: 'bottom'

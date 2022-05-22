@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Confirmación</h1>
+<h1 mat-dialog-title>{{"adminDialogo.confirmacion" | translate}}</h1>
 <div mat-dialog-content>
-    <p>{{mensaje}}</p>
+    <div [innerHTML]="mensaje | translate"></div>
 </div>
 <div mat-dialog-actions>
-    <button mat-raised-button color="warn" (click)="cerrarDialogo()">No</button>
-    <button mat-raised-button color="primary" (click)="confirmado()" cdkFocusInitial>Sí</button>
+    <button mat-raised-button color="warn" (click)="cerrarDialogo()">{{"adminDialogo.no" | translate}}</button>
+    <button mat-raised-button color="primary" (click)="confirmado()" cdkFocusInitial>{{"adminDialogo.si" | translate}}</button>
 </div>

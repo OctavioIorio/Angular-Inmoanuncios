@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AppComponent } from '../app.component';
 import { IRegister } from '../interfaces/iregister';
 import { UploadService } from '../services/upload.service';
@@ -24,7 +26,7 @@ export class RegisterComponent implements OnInit {
   imagen_valor: any;
   info: any = new Object;
 
-  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent, private _uploadService: UploadService) {
+  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent, private _uploadService: UploadService, private _snackBar: MatSnackBar, private translate: TranslateService) {
     this.registerForm = this.createForm();
   }
   //^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,16})\S$
@@ -126,6 +128,10 @@ export class RegisterComponent implements OnInit {
     this.registerForm.reset();
     this.usuariosService.postUsuario(formData).subscribe({
       next: (x) => {
+        this.route.navigate(['/login'])
+      .then(() => {
+        this.notificacionUsuarioRegistrado();
+      });
       },
       error: (error) => {
         console.error(error.message);
@@ -181,6 +187,14 @@ export class RegisterComponent implements OnInit {
     };
 
     return str;
+  }
+
+  notificacionUsuarioRegistrado() {
+    this._snackBar.open(this.translate.instant('loginDialogo.usuRegistrado'), this.translate.instant('adminDialogo.cerrar'), {
+      duration: 5000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom'
+    });
   }
 
 }

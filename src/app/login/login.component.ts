@@ -99,13 +99,13 @@ export class LoginComponent implements OnInit {
     let str = '';
     switch (nControl) {
       case 'nickname':
-        str = ctl.hasError('required') ? 'Field is required' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' : '';
         break;
       case 'password':
-        str = ctl.hasError('required') ? 'Field is required' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' : '';
         break;
       case 'recaptcha':
-        str = ctl.hasError('required') ? 'Field is required' : '';
+        str = ctl.hasError('required') ? 'form.errorRequired' : '';
         break;
       default:
         str = 'Control invalid';

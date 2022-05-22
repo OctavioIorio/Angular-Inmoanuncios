@@ -1,5 +1,5 @@
 <div id="contenido-perfil" class="p-5">
-  <div class="container">
+  <div class="container vh-100">
     <form class="d-lg-flex" [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="container-fluid">
         <img class="rounded mx-auto d-block img-thumbnail" id="imgperfil" onerror="this.src = 'assets/sinfotoperfil.png'" alt="profile">
@@ -67,80 +67,80 @@
 
     </form>
 
+    <div *ngIf="favoritos.length > 0" class="list w-75 container-fluid mt-4">
+      <div class="d-flex justify-content-between">
+        <h2>{{'profile.yourFavs' | translate}}</h2>
+        <div class="scrollBtns d-flex">
+          <button (click)="scrollFavLeft()"><i class="fa fa-angle-left"></i></button>
+          <button (click)="scrollFavRight()"><i class="fa fa-angle-right"></i></button>
+        </div>
+      </div>
+      <div id="listFav" class="listFav d-flex gap-2 p-0">
+        <div *ngFor="let fav of favoritos">
+          <div class="containerImg">
+            <a routerLink="/ad/{{fav.anuncio_id}}">
+              <img src="{{fav.anuncio?.imagen}}" onerror="this.src = 'assets/casa.png'"
+                alt="adImg-{{fav.anuncio?.referencia}}" class="listImg">
+            </a>
+            <div class="btns d-flex flex-column gap-2">
+              <button class="delBtn mt-1" matTooltip="{{'profile.removeFav' | translate}}" matTooltipPosition="right"
+                (click)="deleteFav(fav.id);"><i class="fa fa-trash"></i></button>
+            </div>
+            <div class="textoImg">
+              {{fav.anuncio?.referencia}}
+            </div>
+          </div>
+          <div class="infoContent p-2">
+            <p>{{tipoTrans(fav.anuncio?.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
+              {{tipoTrans(fav.anuncio?.trato) |
+              translate}}</p>
+            <p class="direccion"><span *ngIf="fav.anuncio?.cp">{{fav.anuncio?.cp}},
+              </span>{{fav.anuncio?.municipio?.nombre}},
+              {{fav.anuncio?.provincia?.nombre}}</p>
+            <p class="precio"><span>{{fav.anuncio?.precio}}</span> €</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="anuncios.length > 0" class="list w-75 container-fluid mt-4">
+      <div class="d-flex justify-content-between">
+        <h2>{{'profile.yourAds' | translate}}</h2>
+        <div class="scrollBtns d-flex">
+          <button (click)="scrollAdLeft()"><i class="fa fa-angle-left"></i></button>
+          <button (click)="scrollAdRight()"><i class="fa fa-angle-right"></i></button>
+        </div>
+      </div>
+      <div id="listAd" class="listFav d-flex gap-2 p-0">
+        <div *ngFor="let anuncio of anuncios">
+          <div class="containerImg">
+            <a routerLink="/ad/{{anuncio.id}}">
+              <img src="{{anuncio.imagen}}" onerror="this.src = 'assets/casa.png'" alt="adImg-{{anuncio.referencia}}"
+                class="listImg">
+            </a>
+            <div class="btns d-flex flex-column gap-2">
+              <button class="editBtn mt-1" matTooltip="{{'profile.editAd' | translate}}" matTooltipPosition="right"
+                (click)="openDialogEdit(anuncio);"><i class="fa-regular fa-pen-to-square"></i></button>
+              <button class="delBtn" matTooltip="{{'profile.removeAd' | translate}}" matTooltipPosition="right"
+                (click)="openDialogDeleteAd(anuncio.id);"><i class="fa fa-trash"></i></button>
+            </div>
+            <div class="textoImg">
+              {{anuncio.referencia}}
+            </div>
+          </div>
+          <div class="infoContent p-2">
+            <p>{{tipoTrans(anuncio.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
+              {{tipoTrans(anuncio.trato) |
+              translate}}</p>
+            <p class="direccion"><span *ngIf="anuncio.cp">{{anuncio?.cp}},
+              </span>{{anuncio.municipio?.nombre}},
+              {{anuncio?.provincia?.nombre}}</p>
+            <p class="precio"><span>{{anuncio.precio}}</span> €</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-
-  <div *ngIf="favoritos.length > 0" class="list w-75 container-fluid mt-4">
-    <div class="d-flex justify-content-between">
-      <h2>{{'profile.yourFavs' | translate}}</h2>
-      <div class="scrollBtns d-flex">
-        <button (click)="scrollFavLeft()"><i class="fa fa-angle-left"></i></button>
-        <button (click)="scrollFavRight()"><i class="fa fa-angle-right"></i></button>
-      </div>
-    </div>
-    <div id="listFav" class="listFav d-flex gap-2 p-0">
-      <div *ngFor="let fav of favoritos">
-        <div class="containerImg">
-          <a routerLink="/ad/{{fav.anuncio_id}}">
-            <img src="{{fav.anuncio?.imagen}}" onerror="this.src = 'assets/casa.png'"
-              alt="adImg-{{fav.anuncio?.referencia}}" class="listImg">
-          </a>
-          <div class="btns d-flex flex-column gap-2">
-            <button class="delBtn mt-1" matTooltip="{{'profile.removeFav' | translate}}" matTooltipPosition="right"
-              (click)="deleteFav(fav.id);"><i class="fa fa-trash"></i></button>
-          </div>
-          <div class="textoImg">
-            {{fav.anuncio?.referencia}}
-          </div>
-        </div>
-        <div class="infoContent p-2">
-          <p>{{tipoTrans(fav.anuncio?.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
-            {{tipoTrans(fav.anuncio?.trato) |
-            translate}}</p>
-          <p class="direccion"><span *ngIf="fav.anuncio?.cp">{{fav.anuncio?.cp}},
-            </span>{{fav.anuncio?.municipio?.nombre}},
-            {{fav.anuncio?.provincia?.nombre}}</p>
-          <p class="precio"><span>{{fav.anuncio?.precio}}</span> €</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="anuncios.length > 0" class="list w-75 container-fluid mt-4">
-    <div class="d-flex justify-content-between">
-      <h2>{{'profile.yourAds' | translate}}</h2>
-      <div class="scrollBtns d-flex">
-        <button (click)="scrollAdLeft()"><i class="fa fa-angle-left"></i></button>
-        <button (click)="scrollAdRight()"><i class="fa fa-angle-right"></i></button>
-      </div>
-    </div>
-    <div id="listAd" class="listFav d-flex gap-2 p-0">
-      <div *ngFor="let anuncio of anuncios">
-        <div class="containerImg">
-          <a routerLink="/ad/{{anuncio.id}}">
-            <img src="{{anuncio.imagen}}" onerror="this.src = 'assets/casa.png'" alt="adImg-{{anuncio.referencia}}"
-              class="listImg">
-          </a>
-          <div class="btns d-flex flex-column gap-2">
-            <button class="editBtn mt-1" matTooltip="{{'profile.editAd' | translate}}" matTooltipPosition="right"
-              (click)="openDialogEdit(anuncio);"><i class="fa-regular fa-pen-to-square"></i></button>
-            <button class="delBtn" matTooltip="{{'profile.removeAd' | translate}}" matTooltipPosition="right"
-              (click)="openDialogDeleteAd(anuncio.id);"><i class="fa fa-trash"></i></button>
-          </div>
-          <div class="textoImg">
-            {{anuncio.referencia}}
-          </div>
-        </div>
-        <div class="infoContent p-2">
-          <p>{{tipoTrans(anuncio.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
-            {{tipoTrans(anuncio.trato) |
-            translate}}</p>
-          <p class="direccion"><span *ngIf="anuncio.cp">{{anuncio?.cp}},
-            </span>{{anuncio.municipio?.nombre}},
-            {{anuncio?.provincia?.nombre}}</p>
-          <p class="precio"><span>{{anuncio.precio}}</span> €</p>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

@@ -19,6 +19,7 @@ import { DataMunicipiosService } from '../services/data-municipios.service';
 import { HomeComponent } from '../home/home.component';
 import { AppComponent } from '../app.component';
 import { UploadService } from '../services/upload.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ad-form',
@@ -64,7 +65,7 @@ export class AdFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private anuncioService: DataAnunciosService,
     private tipoService: DataTiposService, private municipioService: DataMunicipiosService,
     private route: Router, public dialogRef: MatDialogRef<AdFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { user: string }, private _snackBar: MatSnackBar, private _uploadService: UploadService) {
+    @Inject(MAT_DIALOG_DATA) public data: { user: string }, private _snackBar: MatSnackBar, private _uploadService: UploadService, private translate: TranslateService) {
     this.myForm = this.createForm();
   }
 
@@ -196,7 +197,7 @@ export class AdFormComponent implements OnInit {
     var descripcion = this.myForm.get('descripcion');
     var calle = this.myForm.get('calle');
     var num = this.myForm.get('num');
-    
+
     formData.append("referencia", this.randomReferencia());
     formData.append("vendedor_id", this.data.user);
     let cDate = new Date(); formData.append("created_at", `${cDate.getFullYear()}-${('0' + (cDate.getMonth() + 1)).slice(-2)}-${('0' + cDate.getDate()).slice(-2)} ${('0' + cDate.getHours()).slice(-2)}:${('0' + cDate.getMinutes()).slice(-2)}:${('0' + cDate.getSeconds()).slice(-2)}`);
@@ -271,7 +272,7 @@ export class AdFormComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.open("Anuncio creado", "Cerrar", {
+    this._snackBar.open(this.translate.instant('adFormDialogo.creado'), this.translate.instant('adminDialogo.cerrar'), {
       duration: 5000,
       horizontalPosition: 'left',
       verticalPosition: 'bottom'

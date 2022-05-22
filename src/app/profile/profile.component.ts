@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AdEditComponent } from '../ad-edit/ad-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogoConfirmacionComponent } from '../dialogo-confirmacion/dialogo-confirmacion.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit {
   anuncios: IAnuncio[] = [];
 
   constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent,
-    private _uploadService: UploadService, private anuncioService: DataAnunciosService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+    private _uploadService: UploadService, private anuncioService: DataAnunciosService, public dialog: MatDialog, private _snackBar: MatSnackBar, private translate: TranslateService) {
     this.editProfileForm = this.createForm();
   }
 
@@ -290,7 +291,7 @@ export class ProfileComponent implements OnInit {
   openDialogDeleteAd(id: number) {
     this.dialog
       .open(DialogoConfirmacionComponent, {
-        data: `¿Seguro que quieres borrar este anuncio?`
+        data: "adminDialogo.borrarAnuncio"
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
@@ -305,7 +306,7 @@ export class ProfileComponent implements OnInit {
   deleteAnuncio(id: number) {
     this.anuncioService.deleteAnuncio(id).subscribe(() => {
       this.getAnuncios();
-      this._snackBar.open("Anuncio eliminado", "Cerrar", {
+      this._snackBar.open(this.translate.instant('profileDialogo.adEliminado'), this.translate.instant('adminDialogo.cerrar'), {
         duration: 5000,
         horizontalPosition: 'left',
         verticalPosition: 'bottom'
@@ -316,7 +317,7 @@ export class ProfileComponent implements OnInit {
   deleteFav(id: number) {
     this.usuariosService.deleteFavorito(id).subscribe(() => {
       this.getFavs();
-      this._snackBar.open("Favorito eliminado", "Cerrar", {
+      this._snackBar.open(this.translate.instant('profileDialogo.favEliminado'), this.translate.instant('adminDialogo.cerrar'), {
         duration: 5000,
         horizontalPosition: 'left',
         verticalPosition: 'bottom'

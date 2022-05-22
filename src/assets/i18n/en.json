@@ -113,5 +113,21 @@
   "cookies.titulo": "Cookies Policy",
   "cookies.texto_principal": "<p>Access to this Web Site may involve the use of cookies. Cookies are small amounts of information that are stored in the browser used by each User -in the different devices that can be used to navigate- so that the server remembers certain information that later and only the server that implemented it will read. Cookies make browsing easier, more user-friendly, and do not damage the browsing device.</p> <p>Cookies are automatic procedures for collecting information related to the preferences determined by the User during his visit to the Website in order to recognize him as a User, and to personalize his experience and use of the Website, and can also, for example, help to identify and resolve errors.</p> <p>Information collected through cookies may include the date and time of visits to the Website, the pages viewed, the time spent on the Website, and the sites visited just before and just after the Website. However, no cookie allows this cookie to contact the User's telephone number or any other means of personal contact. No cookie can extract information from the User's hard drive or steal personal information. The only way for the User's private information to be part of the Cookie file is for the User to personally give that information to the server.</p> <p>Cookies that allow a person to be identified are considered personal data. Therefore, the Privacy Policy described above will apply to them. In this sense, for the use of these cookies, the consent of the User will be necessary. This consent will be communicated, on the basis of a genuine choice, offered by an affirmative and positive decision, before the initial processing, removable and documented.</p>",
   "cookies.propias": "<h3 class='fw-bold'>Own Cookies</h3> <p>Are those cookies that are sent to the User's computer or device and managed exclusively by Inmoanuncios for the better functioning of the Website. The information collected is used to improve the quality of the Web Site and its Content and your experience as a User. These cookies allow us to recognize the User as a repeat visitor to the Website and adapt the content to offer content that suits your preferences.</p>",
-  "cookies.deshabilitar": "<h3 class='fw-bold'>Disabling, rejecting and deleting cookies</h3> <p>The User can disable, reject and delete cookies -totally or partially- installed on their device by configuring their browser (among which are, for example, Chrome, Firefox, Safari, Explorer). In this regard, the procedures for rejecting and deleting cookies may differ from one Internet browser to another. Consequently, the User must follow the instructions provided by the Internet browser that he/she is using. In the event that you reject the use of cookies - in whole or in part - you may continue to use the Web Site, although you may be limited in the use of some of its features.</p>"
+  "cookies.deshabilitar": "<h3 class='fw-bold'>Disabling, rejecting and deleting cookies</h3> <p>The User can disable, reject and delete cookies -totally or partially- installed on their device by configuring their browser (among which are, for example, Chrome, Firefox, Safari, Explorer). In this regard, the procedures for rejecting and deleting cookies may differ from one Internet browser to another. Consequently, the User must follow the instructions provided by the Internet browser that he/she is using. In the event that you reject the use of cookies - in whole or in part - you may continue to use the Web Site, although you may be limited in the use of some of its features.</p>",
+  "adminDialogo.si": "Yes",
+  "adminDialogo.no": "No",
+  "adminDialogo.confirmacion": "Confirmation",
+  "adminDialogo.borrarUsuario": "¿Are you sure you want to delete this user?<br> <strong>IMPORTANT: By deleting this user, everything related to him is deleted: ads, favorites, account, etc.<strong>",
+  "adminDialogo.borrarAnuncio": "¿Are you sure you want to delete this ad?",
+  "adminDialogo.editadoUsuario": "User edited",
+  "adminDialogo.editadoAnuncio": "Ad edited",
+  "adminDialogo.borradoUsuario": "User deleted",
+  "adminDialogo.borradoAnuncio": "Ad deleted",
+  "adminDialogo.cerrar": "Close",
+  "loginDialogo.usuRegistrado": "Registered user",
+  "adDialogo.enviado": "Message sent",
+  "adEditDialogo.editado": "Ad edited",
+  "adFormDialogo.creado": "Ad created",
+  "profileDialogo.adEliminado": "Ad deleted",
+  "profileDialogo.favEliminado": "Favorite deleted"
 }

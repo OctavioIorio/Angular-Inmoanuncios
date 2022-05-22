@@ -20,6 +20,7 @@ import { HomeComponent } from '../home/home.component';
 import { AppComponent } from '../app.component';
 import { UploadService } from '../services/upload.service';
 import { IAnuncioImagen } from '../interfaces/ianuncioimagen';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ad-edit',
@@ -66,7 +67,7 @@ export class AdEditComponent implements OnInit {
     private tipoService: DataTiposService, private municipioService: DataMunicipiosService,
     private route: Router, public dialogRef: MatDialogRef<AdEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { anuncio: IAnuncio }, private _snackBar: MatSnackBar,
-    private _uploadService: UploadService) {
+    private _uploadService: UploadService, private translate: TranslateService) {
     this.myForm = this.createForm()
   }
 
@@ -81,7 +82,7 @@ export class AdEditComponent implements OnInit {
       imgs.forEach(e => {
         this.images.push(e.imagen.replace(/%2F/gm, "/"));
       });
-      
+
     });
   }
 
@@ -213,7 +214,7 @@ export class AdEditComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.open("Anuncio creado", "Cerrar", {
+    this._snackBar.open(this.translate.instant('adEditDialogo.editado'), this.translate.instant('adminDialogo.cerrar'), {
       duration: 5000,
       horizontalPosition: 'left',
       verticalPosition: 'bottom'

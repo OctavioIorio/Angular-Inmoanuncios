@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { IGeneral } from '../interfaces/igeneral';
 import { UploadService } from '../services/upload.service';
 import { UsuariosService } from '../services/usuarios.service';
@@ -25,7 +26,7 @@ export class DialogEditProfileComponent implements OnInit {
   usuario: any;
 
   constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private _uploadService: UploadService, public dialogRef: MatDialogRef<DialogEditProfileComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number }, private _snackBar: MatSnackBar) {
+    @Inject(MAT_DIALOG_DATA) public data: { id: number }, private _snackBar: MatSnackBar, private translate: TranslateService) {
       this.editProfileForm = this.createForm();
   }
 
@@ -185,7 +186,7 @@ export class DialogEditProfileComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.open("Usuario editado", "Cerrar", {
+    this._snackBar.open(this.translate.instant('adminDialogo.editadoUsuario'), this.translate.instant('adminDialogo.cerrar'), {
       duration: 5000,
       horizontalPosition: 'right',
       verticalPosition: 'bottom'
