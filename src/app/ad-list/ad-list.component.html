@@ -1,9 +1,9 @@
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-2">
+        <button id="viewFilters" (click)="viewFilters()"mat-raised-button color="primary">{{'adlist.viewFilterBtn' | translate}}</button>
         <div class="col col-md-4 d-flex justify-content-center">
-            <div class="filtros">
-                <div class="container pt-4 d-flex flex-column border">
-                    <!-- <span>Tipo de inmueble</span><br> -->
+            <div id="filtros" class="filtros mb-4">
+                <div class="container py-4 d-flex flex-column border">
                     <mat-form-field appearance="fill">
                         <mat-label>{{'adlist.selectPropertyType' | translate}}</mat-label>
                         <mat-select [(ngModel)]="tipoSelected" [(value)]="tipoSelected">
@@ -22,7 +22,6 @@
                         </div>
                     </mat-radio-group><br>
 
-                    <!-- <span>Precio</span> -->
                     <div class="d-flex flex-column">
                         <mat-form-field>
                             <input type="number" [(ngModel)]="precioMin" matInput [placeholder]="'adlist.minPrice' | translate">
@@ -34,7 +33,6 @@
                         </mat-form-field>
                     </div>
 
-                    <!-- <span>Área</span> -->
                     <div class="d-flex flex-column">
                         <mat-form-field>
                             <input type="number" [(ngModel)]="areaMin" matInput [placeholder]="'adlist.maxArea' | translate">
@@ -55,7 +53,6 @@
                         <mat-radio-button value="4">4 {{'adlist.more' | translate}}</mat-radio-button>
                     </mat-radio-group>
 
-                    <!-- <span>Referencia</span><br> -->
                     <mat-form-field hintLabel="{{'adlist.maxRefChars' | translate}}">
                         <input [(ngModel)]="referencia" matInput #refe placeholder="{{'adlist.reference' | translate}}" maxlength="10">
                         <mat-hint align="end">{{refe.value?.length || 0}}/{{refe.maxLength}}</mat-hint>
@@ -86,7 +83,7 @@
                                 <p class="card-text">{{anuncio.precio}} €</p>
                                 <p *ngIf="anuncio.area" class="card-text">{{anuncio.area}} m²</p>
                                 <p class="card-text">{{anuncio.referencia}}</p>
-                                <p *ngIf="anuncio.descripcion" class="card-text desc">{{anuncio.descripcion}}</p>
+                                <p *ngIf="anuncio.descripcion !== null" class="card-text desc">{{anuncio.descripcion}}</p>
                             </div>
                         </div>
                     </div>
@@ -96,7 +93,7 @@
 
         </div>
     </div>
-    <mat-paginator (page)="OnPageChange($event)" [length]="anuncios.length" [pageSize]="10"
+    <mat-paginator class="mt-4" (page)="OnPageChange($event)" [length]="anuncios.length" [pageSize]="10"
         [pageSizeOptions]="[4, 10, 20, 50, 100]" aria-label="Selecciona">
     </mat-paginator>
 </div>

@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -19,13 +19,14 @@ import { DataMunicipiosService } from '../services/data-municipios.service';
 import { HomeComponent } from '../home/home.component';
 import { AppComponent } from '../app.component';
 import { UploadService } from '../services/upload.service';
+import { IAnuncioImagen } from '../interfaces/ianuncioimagen';
 
 @Component({
-  selector: 'app-ad-form',
-  templateUrl: './ad-form.component.html',
-  styleUrls: ['./ad-form.component.css']
+  selector: 'app-ad-edit',
+  templateUrl: './ad-edit.component.html',
+  styleUrls: ['./ad-edit.component.css']
 })
-export class AdFormComponent implements OnInit {
+export class AdEditComponent implements OnInit {
 
   myForm: FormGroup;
   myControl = new FormControl();
@@ -63,9 +64,10 @@ export class AdFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private anuncioService: DataAnunciosService,
     private tipoService: DataTiposService, private municipioService: DataMunicipiosService,
-    private route: Router, public dialogRef: MatDialogRef<AdFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { user: string }, private _snackBar: MatSnackBar, private _uploadService: UploadService) {
-    this.myForm = this.createForm();
+    private route: Router, public dialogRef: MatDialogRef<AdEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { anuncio: IAnuncio }, private _snackBar: MatSnackBar,
+    private _uploadService: UploadService) {
+    this.myForm = this.createForm()
   }
 
   ngOnInit(): void {
@@ -75,35 +77,12 @@ export class AdFormComponent implements OnInit {
       this.tipos = tipos;
     });
 
-    // Get Provincias alphabetically sorted
-    this.municipioService.getProvincias().subscribe((provincias: IProvincia[]) => {
-      this.provincias = provincias.sort((a, b) => a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase()))
-
-      // Autocomplete Provincias
-      this.filteredProvincias = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map(value => (typeof value === 'string' ? value : value.nombre)),
-        map(nombre => (nombre ? this._filterProv(nombre) : this.provincias.slice())),
-      );
+    this.anuncioService.getImagenesAnuncio(this.data.anuncio.id).subscribe((imgs: IAnuncioImagen[]) => {
+      imgs.forEach(e => {
+        this.images.push(e.imagen.replace(/%2F/gm, "/"));
+      });
+      
     });
-
-    // Get Municipios alphabetically sorted
-    this.municipioService.getMunicipios().subscribe((municipios: IMunicipio[]) => {
-      this.municipios = municipios.sort((a, b) => a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase()))
-
-      // Autocomplete Municipios
-      this.filteredMunicipios = this.munisFiltered();
-    });
-  }
-
-  munisFiltered() {
-    return this.myForm.controls["municipio_id"].valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.nombre)),
-      map(nombre => (nombre ? this._filterMun(nombre)
-        .filter(municipio => municipio.provincia_id === this.provinciaSelected) : this.municipios.slice()
-          .filter(municipio => municipio.provincia_id === this.provinciaSelected))),
-    );
   }
 
   get f() {
@@ -130,44 +109,19 @@ export class AdFormComponent implements OnInit {
     }
   }
 
-  displayFnProv(id: number): string {
-    if (!id) return '';
-
-    this.provinciaSelected = id;
-
-    let index = this.provincias.findIndex(provincia => provincia.id === id);
-    return this.provincias[index].nombre;
-  }
-
-  displayFnMun(municipio: IMunicipio): string {
-    return municipio && municipio.nombre ? municipio.nombre : '';
-  }
-
-  private _filterProv(nombre: string): IProvincia[] {
-    const filterValue = nombre.toLowerCase();
-
-    return this.provincias.filter(provincia => provincia.nombre.toLowerCase().includes(filterValue));
-  }
-
-  private _filterMun(nombre: string): IMunicipio[] {
-    const filterValue = nombre.toLowerCase();
-
-    return this.municipios.filter(municipio => municipio.nombre.toLowerCase().includes(filterValue));
-  }
-
   createForm() {
     return this.formBuilder.group({
       file: [null],
-      municipio_id: [null, [Validators.required]],
-      cp: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
-      precio: [null, [Validators.required]],
-      tipo_id: [null, [Validators.required]],
-      trato: [null, [Validators.required]],
-      habitaciones: [null],
-      area: [null],
-      descripcion: [null],
-      calle: [null],
-      num: [null],
+      municipio_id: [this.data.anuncio.municipio_id, [Validators.required]],
+      cp: [this.data.anuncio.cp, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
+      precio: [this.data.anuncio.precio, [Validators.required]],
+      tipo_id: [this.data.anuncio.tipo_id, [Validators.required]],
+      trato: [this.data.anuncio.trato, [Validators.required]],
+      habitaciones: [this.data.anuncio.habitaciones],
+      area: [this.data.anuncio.area],
+      descripcion: [this.data.anuncio.descripcion],
+      calle: [this.data.anuncio.calle],
+      num: [this.data.anuncio.num],
     });
   }
 
@@ -179,14 +133,11 @@ export class AdFormComponent implements OnInit {
       this.onUpload();
     } else {
       this.postAnuncio();
-      // this.restainfo();
     }
   }
 
   postAnuncio() {
     const formData = new FormData();
-    var file = this.myForm.get('file');
-    var municipio_id = this.myForm.get('municipio_id');
     var cp = this.myForm.get('cp');
     var precio = this.myForm.get('precio');
     var tipo_id = this.myForm.get('tipo_id');
@@ -196,11 +147,11 @@ export class AdFormComponent implements OnInit {
     var descripcion = this.myForm.get('descripcion');
     var calle = this.myForm.get('calle');
     var num = this.myForm.get('num');
-    
-    formData.append("referencia", this.randomReferencia());
-    formData.append("vendedor_id", this.data.user);
-    let cDate = new Date(); formData.append("created_at", `${cDate.getFullYear()}-${('0' + (cDate.getMonth() + 1)).slice(-2)}-${('0' + cDate.getDate()).slice(-2)} ${('0' + cDate.getHours()).slice(-2)}:${('0' + cDate.getMinutes()).slice(-2)}:${('0' + cDate.getSeconds()).slice(-2)}`);
-    if (municipio_id) formData.append("municipio_id", municipio_id.value.id);
+
+    formData.append("referencia", this.data.anuncio.referencia);
+    formData.append("vendedor_id", this.data.anuncio.vendedor_id.toString());
+    formData.append("created_at", this.data.anuncio.created_at.toString());
+    formData.append("municipio_id", this.data.anuncio.municipio_id.toString());
     if (cp?.value != null) formData.append("cp", cp.value);
     if (precio) formData.append("precio", precio.value);
     if (tipo_id) formData.append("tipo_id", tipo_id.value);
@@ -211,7 +162,7 @@ export class AdFormComponent implements OnInit {
     if (calle?.value != null) formData.append("calle", calle.value);
     if (num?.value != null) formData.append("num", num.value);
 
-    this.anuncioService.postAnuncio(formData).subscribe({
+    this.anuncioService.editAnuncio(this.data.anuncio.id, formData).subscribe({
       next: (res) => {
         this.anuncio_id = res.id;
         this.dialogRef.close();
@@ -261,15 +212,6 @@ export class AdFormComponent implements OnInit {
     return str;
   }
 
-  randomReferencia() {
-    let result: string = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 10; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-  }
-
   openSnackBar() {
     this._snackBar.open("Anuncio creado", "Cerrar", {
       duration: 5000,
@@ -279,6 +221,8 @@ export class AdFormComponent implements OnInit {
   }
 
   onUpload() {
+    this.anuncioService.deleteImagenesAnuncio(this.data.anuncio.id).subscribe();
+
     var data = new FormData();
     this.imagesF.forEach(img => {
       data.append('file', img);
@@ -286,7 +230,6 @@ export class AdFormComponent implements OnInit {
       data.append('cloud_name', 'inmoanuncios');
 
       this._uploadService.uploadImage(data).subscribe(res => {
-        // this.info = res;
         let url = res.secure_url.replace(/\//gm, "%2F");
         if (this.thumbnail.length == 0) this.thumbnail = url;
         this.restainfo(url);
@@ -301,7 +244,7 @@ export class AdFormComponent implements OnInit {
   restainfo(url: string) {
     const formData = new FormData();
     formData.append("imagen", url);
-    formData.append("anuncio_id", this.anuncio_id);
+    formData.append("anuncio_id", this.data.anuncio.id.toString());
 
     this.anuncioService.postImagenesAnuncio(formData).subscribe({
       next: (x) => {
@@ -312,23 +255,4 @@ export class AdFormComponent implements OnInit {
     });
   }
 
-  uploadImagen() {
-    if (this.imagesF.length > 0) {
-      const formData = new FormData();
-      formData.append("imagen", this.info.secure_url.replace(/\//gm, "%2F"));
-      formData.append("anuncio_id", this.anuncio_id);
-
-      this.anuncioService.postImagenesAnuncio(formData).subscribe({
-        next: (x) => {
-          // this.postAnuncio();
-        },
-        error: (error) => {
-          console.log(error.message);
-        }
-      });
-    } else {
-
-    }
-
-  }
 }

@@ -10,7 +10,7 @@ export interface IAnuncio {
     vendedor_id: IGeneral["id"];
     imagen: string;
     municipio_id: IMunicipio["id"];
-    cp: number;
+    cp: string;
     precio: number;
     tipo_id: ITipo["id"];
     trato: string;

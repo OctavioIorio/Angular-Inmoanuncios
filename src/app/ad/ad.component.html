@@ -1,45 +1,39 @@
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8 border" *ngIf="anuncio">
+        <div class="col col-md-8" *ngIf="anuncio">
             <!-- <img src="{{anuncio.imagen}}" onerror="this.src = 'assets/casa.png'" class="img-fluid w-100" alt="adImg-{{anuncio.referencia}}"> -->
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselImg" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
+                    <button type="button" *ngFor="let img of imgs; let first = first; let i = index;"
+                        data-bs-target="#carouselImg" [attr.data-bs-slide-to]="i" [ngClass]="{ active: first }"
+                        [attr.aria-current]="{true: first}" [attr.aria-label]="'Slide' + (i+1)"></button>
                 </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                    <!-- <div class="carousel-item active">
                         <img src="https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?cs=srgb&dl=pexels-pixabay-60597.jpg&fm=jpg"
                             class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://images3.alphacoders.com/954/thumbbig-954241.jpg" class="d-block w-100"
-                            alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/faa48d2d-12c2-43d1-bf23-b5e99857825b/df0qcbg-31dfc7f5-dab9-4101-85fe-1b124f319219.jpg/v1/fill/w_622,h_350,q_70,strp/dream_in_colors_by_ellysiumn_df0qcbg-350t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZhYTQ4ZDJkLTEyYzItNDNkMS1iZjIzLWI1ZTk5ODU3ODI1YlwvZGYwcWNiZy0zMWRmYzdmNS1kYWI5LTQxMDEtODVmZS0xYjEyNGYzMTkyMTkuanBnIiwiaGVpZ2h0IjoiPD00NTAiLCJ3aWR0aCI6Ijw9ODAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd21cL2ZhYTQ4ZDJkLTEyYzItNDNkMS1iZjIzLWI1ZTk5ODU3ODI1YlwvZWxseXNpdW1uLTQucG5nIiwib3BhY2l0eSI6OTUsInByb3BvcnRpb25zIjowLjQ1LCJncmF2aXR5IjoiY2VudGVyIn19.09GrLTfKzPVtwVCPYdghIuqx7wFUjBnE7KCty5iljpY"
-                            class="d-block w-100" alt="...">
+                    </div> -->
+                    <div class="carousel-item" *ngFor="let img of imgs; let first = first;"
+                        [ngClass]="{ active: first }">
+                        <img src="{{viewImage(img.imagen)}}" class="d-block w-100" alt="...">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselImg" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselImg" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-            <span>
+            <span class="d-flex justify-content-between">
                 <h1>{{tipoTrans(anuncio.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
                     {{tipoTrans(anuncio.trato) |
                     translate}} {{'ad.in' | translate}} {{anuncio.municipio?.nombre}}</h1>
+                <button mat-icon-button id="favBtn" (click)="favBtn()">
+                    <mat-icon id="favIcon">favorite</mat-icon>
+                </button>
             </span>
             <p class="direccion"><span *ngIf="anuncio.cp">{{anuncio.cp}}, </span>{{anuncio.municipio?.nombre}},
                 {{anuncio.provincia?.nombre}}</p>
@@ -77,11 +71,7 @@
                         type="submit">{{'ad.contact' | translate}}</button>
                 </div>
             </div>
+            <a class="my-2" mat-raised-button [routerLink]="['/ad-list/'+this.anuncio?.municipio_id]">{{'ad.return' | translate}}</a>
         </div>
     </div>
 </div>
-
-
-
-<br>
-<a [routerLink]="['/ad-list/'+this.anuncio?.municipio_id]">Volver</a>

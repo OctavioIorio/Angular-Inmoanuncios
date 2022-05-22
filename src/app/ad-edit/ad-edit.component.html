@@ -7,29 +7,17 @@
                         <mat-form-field appearance="fill">
                             <mat-label>{{'adlist.selectPropertyType' | translate}}</mat-label>
                             <mat-select formControlName="tipo_id">
-                                <div *ngFor="let tipo of tipos">
-                                    <mat-option [value]="tipo.id">{{tipo.nombre}}</mat-option>
-                                </div>
+                                <mat-option *ngFor="let tipo of tipos" [value]="tipo.id">{{tipo.nombre}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="noValid('tipo_id')">
                                 {{ getErrorMessage('tipo_id') }}
                             </mat-error>
                         </mat-form-field>
 
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>{{'adform.province' | translate}}</mat-label>
-                            <input type="text" [placeholder]="'home.selectProv' | translate" matInput [formControl]="myControl"
-                                [matAutocomplete]="autoProvincia" (blur)="this.filteredMunicipios=munisFiltered()">
-                            <mat-autocomplete #autoProvincia="matAutocomplete" [displayWith]="displayFnProv.bind(this)">
-                                <mat-option *ngFor="let provincia of filteredProvincias | async" [value]="provincia.id"
-                                    id="prov-form">
-                                    {{provincia.nombre}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <mat-error *ngIf="noValid('provincia_id')">
-                                {{ getErrorMessage('provincia_id') }}
-                            </mat-error>
-                        </mat-form-field>
+                        <div class="prov d-flex flex-column mb-2 p-1">
+                            <span style="font-size: 0.8em;">{{'adform.province' | translate}}</span>
+                            <span>{{this.data.anuncio.provincia.nombre}}</span>
+                        </div>
 
                         <mat-form-field class="form-element">
                             <input matInput [placeholder]="'adform.cp' | translate" #cp formControlName="cp">
@@ -40,45 +28,38 @@
                         </mat-form-field>
 
                         <mat-form-field class="form-element">
-                            <input type="number" matInput [placeholder]="'adform.price' | translate" #precio formControlName="precio">
+                            <input type="number" matInput [placeholder]="'adform.price' | translate" #precio
+                                formControlName="precio">
                             <mat-error *ngIf="noValid('precio')">
                                 {{ getErrorMessage('precio') }}
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="form-element">
-                            <input type="number" matInput [placeholder]="'adform.area' | translate" #area formControlName="area">
+                            <input type="number" matInput [placeholder]="'adform.area' | translate" #area
+                                formControlName="area">
                         </mat-form-field>
 
                     </div>
                     <div class="col d-flex justify-content-center flex-column">
 
-                        <mat-radio-group [(ngModel)]="tratoSelected" aria-label="Selecciona tipo de trato"
-                            class="d-flex gap-2" formControlName="trato">
-                            <div *ngFor="let trato of tratos">
-                                <mat-radio-button [value]="trato.valor">{{trato.nombre | translate}}</mat-radio-button>
-                            </div>
+                        <mat-radio-group aria-label="Selecciona tipo de trato" class="d-flex gap-2"
+                            formControlName="trato">
+                            <mat-radio-button *ngFor="let trato of tratos" [value]="trato.valor">{{trato.nombre |
+                                translate}}</mat-radio-button>
                         </mat-radio-group>
                         <mat-error *ngIf="noValid('trato')">
                             {{ getErrorMessage('trato') }}
                         </mat-error>
 
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>{{'adform.municipality' | translate}}</mat-label>
-                            <input type="text" [placeholder]="'home.selectMun' | translate" matInput formControlName="municipio_id"
-                                [matAutocomplete]="autoMunicipio">
-                            <mat-autocomplete #autoMunicipio="matAutocomplete" [displayWith]="displayFnMun">
-                                <mat-option *ngFor="let municipio of filteredMunicipios | async" [value]="municipio">
-                                    {{municipio.nombre}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <mat-error *ngIf="noValid('municipio_id')">
-                                {{ getErrorMessage('municipio_id') }}
-                            </mat-error>
-                        </mat-form-field>
+                        <div class="prov d-flex flex-column my-2 p-1">
+                            <span style="font-size: 0.8em;">{{'adform.municipality' | translate}}</span>
+                            <span>{{this.data.anuncio.municipio.nombre}}</span>
+                        </div>
 
                         <mat-form-field hintLabel="3 caràcters mínim" class="form-element">
-                            <input matInput [placeholder]="'adform.street' | translate" #calle [minlength]="3" formControlName="calle">
+                            <input matInput [placeholder]="'adform.street' | translate" #calle [minlength]="3"
+                                formControlName="calle">
                             <mat-hint align="end">{{calle.value?.length || 0}}/3</mat-hint>
                         </mat-form-field>
 
@@ -88,13 +69,16 @@
                         </mat-form-field>
 
                         <mat-form-field class="form-element">
-                            <input type="number" matInput [placeholder]="'adform.num' | translate" #num formControlName="num">
+                            <input type="number" matInput [placeholder]="'adform.num' | translate" #num
+                                formControlName="num">
                         </mat-form-field>
 
                         <div class="form-element">
                             <button mat-raised-button type="submit" class="button" matTooltip="Crea el anuncio"
-                                matTooltipPosition="below" [disabled]="!myForm.valid">{{'adform.publish' | translate}}</button>
-                            <button mat-raised-button color="warn" (click)="this.dialogRef.close();" >{{'adform.cancel' | translate}}</button>
+                                matTooltipPosition="below" [disabled]="!myForm.valid">{{'adform.publish' |
+                                translate}}</button>
+                            <button mat-raised-button color="warn" (click)="this.dialogRef.close();">{{'adform.cancel' |
+                                translate}}</button>
                         </div>
                     </div>
                 </div>

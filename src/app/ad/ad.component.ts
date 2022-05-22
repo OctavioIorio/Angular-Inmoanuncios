@@ -9,11 +9,14 @@ import { IMunicipio } from '../interfaces/imunicipio';
 import { IProvincia } from '../interfaces/iprovincia';
 import { IGeneral } from '../interfaces/igeneral';
 import { IMap } from '../interfaces/imap';
+import { IAnuncioImagen } from '../interfaces/ianuncioimagen';
 
 import { DataAnunciosService } from '../services/data-anuncios.service';
+import { UsuariosService } from '../services/usuarios.service';
 import { DataMapService } from '../services/data-map.service';
 import { AppComponent } from '../app.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IFavorito } from '../interfaces/ifavorito';
 
 @Component({
   selector: 'app-ad',
@@ -29,6 +32,8 @@ export class AdComponent implements OnInit {
 
   anuncio?: IAnuncio;
   vendedor?: IGeneral;
+  imgs!: IAnuncioImagen[];
+  favorito?: number;
 
   // Maps
   map!: IMap;
@@ -40,7 +45,7 @@ export class AdComponent implements OnInit {
   marker!: google.maps.MarkerOptions;
 
   constructor(private anuncioService: DataAnunciosService, private mapService: DataMapService, private route: Router, private aroute: ActivatedRoute,
-    private app: AppComponent, private _snackBar: MatSnackBar) { }
+    private app: AppComponent, private _snackBar: MatSnackBar, private usuariosService: UsuariosService) { }
 
   ngOnInit(): void {
     this.anuncioService.getAnuncio(this.id).subscribe((anuncio: IAnuncio) => {
@@ -61,9 +66,14 @@ export class AdComponent implements OnInit {
       this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IProvincia) => {
         anuncio.provincia = provincia;
       });
+      // Get Imagenes Anuncio
+      this.anuncioService.getImagenesAnuncio(anuncio.id).subscribe((imgs: IAnuncioImagen[]) => {
+        this.imgs = imgs;
+      });
 
       // Maps
       this.mapService.getMap(anuncio).subscribe((map: IMap) => {
+        console.log(map);
         this.latLng = {
           lat: map.data[0].latitude,
           lng: map.data[0].longitude,
@@ -74,10 +84,26 @@ export class AdComponent implements OnInit {
         this.errorMessageMap = error.message;
       });
 
+
+
       this.anuncio = anuncio;
     }, (error) => {
       this.errorMessage = error.message;
     });
+
+    // Fav
+    if (this.app.getCookie()) {
+      this.usuariosService.getFavoritos().subscribe((favoritos: Array<IFavorito>) => {
+        favoritos.forEach(fav => {
+          if (fav.anuncio_id == this.anuncio?.id && fav.usuario_id == parseInt(this.app.getCookie())) {
+            this.favorito = fav.id;
+            document.getElementById("favBtn")!.style.color = "red";
+            document.getElementById("favIcon")!.style.color = "red";
+          }
+        });
+      });
+    }
+
 
   }
 
@@ -97,7 +123,7 @@ export class AdComponent implements OnInit {
     }
 
     if (this.msgContacto.length > 0) {
-      const dataContacto: Object = { msg: this.msgContacto, idComprador: this.app.getCookie(), idAnuncio: this.anuncio?.id, url: window.location.href };
+      const dataContacto: Object = { msg: this.msgContacto, idComprador: this.app.getCookie(), idAnuncio: this.anuncio?.id, url: window.location.href, imagen: this.imgs[0].imagen };
       this.anuncioService.contactarVendedor(dataContacto).subscribe({
         error: (error) => { this.errorMessage = error.message; }
       });
@@ -125,6 +151,34 @@ export class AdComponent implements OnInit {
     var str = numb.toString().split(".");
     str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     return str.join(".");
+  }
+
+  viewImage(img: string) {
+    return img.replace(/%2F/gm, "/");
+  }
+
+  favBtn() {
+    if (!this.app.getCookie()) return;
+
+    if (!this.favorito) {
+      const data: Object = { anuncio_id: this.anuncio?.id, usuario_id: this.app.getCookie() };
+      this.usuariosService.postFavorito(data).subscribe({
+        next: () => {
+          document.getElementById("favBtn")!.style.color = "red";
+          document.getElementById("favIcon")!.style.color = "red";
+        },
+        error: (error) => { this.errorMessage = error.message; }
+      });
+    } else {
+      this.usuariosService.deleteFavorito(this.favorito).subscribe({
+        next: () => {
+          document.getElementById("favBtn")!.style.color = "#8888";
+          document.getElementById("favIcon")!.style.color = "#8888";
+        },
+        error: (error) => { this.errorMessage = error.message; }
+      });
+    }
+    return;
   }
 
 }

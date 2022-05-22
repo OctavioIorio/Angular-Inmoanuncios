@@ -28,6 +28,11 @@
   "form.errorLogin": "Login error",
   "profile.change" : "Change",
   "profile.remove" : "Remove",
+  "profile.yourAds" : "Your ads",
+  "profile.yourFavs" : "Favorites",
+  "profile.removeFav" : "Remove favorite",
+  "profile.removeAd" : "Remove ad",
+  "profile.editAd" : "Edit ad",
   "home.selectProv" : "Choose province",
   "home.selectMun" : "Choose municipality",
   "home.search" : "Search",
@@ -59,9 +64,12 @@
   "adlist.floor" : "Floor",
   "adlist.house" : "House",
   "adlist.for" : "for",
+  "adlist.viewFilterBtn" : "Show filters",
+  "adlist.hideFilterBtn" : "Hide filters",
   "ad.contact" : "Contact",
   "ad.msg" : "Contact the seller",
   "ad.msgph" : "I am interested in...",
   "ad.in" : "in",
-  "ad.rooms" : "rooms"
+  "ad.rooms" : "rooms",
+  "ad.return" : "Return"
 }

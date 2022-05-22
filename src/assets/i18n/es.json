@@ -28,6 +28,11 @@
   "form.errorLogin": "Error en el login",
   "profile.change" : "Cambiar",
   "profile.remove" : "Eliminar",
+  "profile.yourAds" : "Tus anuncios",
+  "profile.yourFavs" : "Favoritos",
+  "profile.removeFav" : "Eliminar favorito",
+  "profile.removeAd" : "Eliminar anuncio",
+  "profile.editAd" : "Editar anuncio",
   "home.selectProv" : "Escoge provincia",
   "home.selectMun" : "Escoge municipio",
   "home.search" : "Buscar",
@@ -59,9 +64,12 @@
   "adlist.floor" : "Piso",
   "adlist.house" : "Casa",
   "adlist.for" : "en",
+  "adlist.viewFilterBtn" : "Mostrar filtros",
+  "adlist.hideFilterBtn" : "Ocultar filtros",
   "ad.contact" : "Contactar",
   "ad.msg" : "Contacta con el vendedor",
   "ad.msgph" : "Estoy interesado en...",
   "ad.in" : "en",
-  "ad.rooms" : "habs."
+  "ad.rooms" : "habs.",
+  "ad.return" : "Volver"
 }

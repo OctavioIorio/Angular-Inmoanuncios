@@ -2,9 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
+import { IAnuncio } from '../interfaces/ianuncio';
+import { IFavorito } from '../interfaces/ifavorito';
 import { IGeneral } from '../interfaces/igeneral';
 import { UploadService } from '../services/upload.service';
 import { UsuariosService } from '../services/usuarios.service';
+import { DataAnunciosService } from '../services/data-anuncios.service';
+import { IMunicipio } from '../interfaces/imunicipio';
+import { IProvincia } from '../interfaces/iprovincia';
+import { ITipo } from '../interfaces/itipo';
+import { IAnuncioImagen } from '../interfaces/ianuncioimagen';
+import { MatDialog } from '@angular/material/dialog';
+import { AdEditComponent } from '../ad-edit/ad-edit.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile',
@@ -22,18 +32,23 @@ export class ProfileComponent implements OnInit {
   imagen_valor: any;
   url: any;
   info: any = new Object;
+  favoritos: IFavorito[] = [];
+  anuncios: IAnuncio[] = [];
 
-  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent, private _uploadService: UploadService) {
+  constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService, private route: Router, private app: AppComponent,
+    private _uploadService: UploadService, private anuncioService: DataAnunciosService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.editProfileForm = this.createForm();
   }
 
   ngOnInit(): void {
     if (!this.app.getCookie()) this.route.navigate(['login']);
-    
+
     this.valor_cookie = this.app.getCookie();
     this.getDatosUsuarios(this.valor_cookie);
-    //document.getElementById("imgperfil")?.setAttribute("src", this.usuario.imagen.replace("%2F", "/"));
 
+    this.getFavs();
+
+    this.getAnuncios();
   }
 
   getDatosUsuarios(id: number) {
@@ -60,6 +75,7 @@ export class ProfileComponent implements OnInit {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.imagen_valor = file;
+      console.log(file);
       console.log("INFO: " + this.imagen_valor);
       this.editProfileForm.get('imagen')?.setValue(file);
       this.onUpload();
@@ -126,7 +142,7 @@ export class ProfileComponent implements OnInit {
 
     if (imagen?.value instanceof File) {
       formData.append("imagen", url_upload.replace(/\//gm, "%2F"));
-    } else if(this.url != ""){
+    } else if (this.url != "") {
       formData.append("imagen", this.url);
     } else {
       formData.append("imagen", imagen?.value);
@@ -193,6 +209,133 @@ export class ProfileComponent implements OnInit {
     document.getElementById("imgperfil")?.setAttribute("src", "https://res.cloudinary.com/inmoanuncios/image/upload/v1651686755/perfil_inmoanuncios_cloudinary/sinfotoperfil_iryooh.png");
     this.url = "https://res.cloudinary.com/inmoanuncios/image/upload/v1651686755/perfil_inmoanuncios_cloudinary/sinfotoperfil_iryooh.png";
     document.getElementById("boton-inmo")?.removeAttribute("disabled");
+  }
+
+  tipoTrans(tipo: any) {
+    switch (tipo) {
+      case "Piso": return "adlist.floor";
+      case "Casa": return "adlist.house";
+      case "Alquiler": return "adlist.rent";
+      case "Venta": return "adlist.sale";
+      default: return "";
+    }
+  }
+
+  openDialogEdit(ad: IAnuncio): void {
+    const dialogRef = this.dialog.open(AdEditComponent, {
+      width: '1080px',
+      data: { anuncio: ad },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAnuncios();
+    });
+  }
+
+  getFavs() {
+    this.usuariosService.getFavoritos().subscribe((favoritos: IFavorito[]) => {
+      favoritos = favoritos.filter(fav => fav.usuario_id === parseInt(this.app.getCookie()));
+      for (const favorito of favoritos) {
+        // Get Usuario Favorito
+        this.usuariosService.getUsuarioFavorito(favorito.id).subscribe((usuario: IGeneral) => {
+          favorito.usuario = usuario;
+        });
+        // Get Anuncio Favorito
+        this.usuariosService.getAnuncioFavorito(favorito.id).subscribe((anuncio: IAnuncio) => {
+          // Get Imagen Anuncio
+          this.anuncioService.getImagenesAnuncio(anuncio.id).subscribe((imgs: IAnuncioImagen[]) => {
+            if (imgs.length > 0) anuncio.imagen = imgs[0].imagen.replace(/%2F/gm, "/");;
+          });
+          // Get Municipio Anuncio
+          this.anuncioService.getMunicipioAnuncio(anuncio.id).subscribe((municipio: IMunicipio) => {
+            anuncio.municipio = municipio;
+          });
+          // Get Provincia Anuncio
+          this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IProvincia) => {
+            anuncio.provincia = provincia;
+          });
+          // Get Tipo Anuncio
+          this.anuncioService.getTipoAnuncio(anuncio.id).subscribe((tipo: ITipo) => {
+            anuncio.tipo = tipo;
+          });
+          favorito.anuncio = anuncio;
+        });
+      }
+
+      this.favoritos = favoritos;
+    });
+  }
+
+  getAnuncios() {
+    this.anuncioService.getData().subscribe((anuncios: IAnuncio[]) => {
+      anuncios = anuncios.filter(anuncio => anuncio.vendedor_id === parseInt(this.app.getCookie()));
+      for (const anuncio of anuncios) {
+        // Get Imagen Anuncio
+        this.anuncioService.getImagenesAnuncio(anuncio.id).subscribe((imgs: IAnuncioImagen[]) => {
+          if (imgs.length > 0) anuncio.imagen = imgs[0].imagen.replace(/%2F/gm, "/");;
+        });
+        // Get Tipo Anuncio
+        this.anuncioService.getTipoAnuncio(anuncio.id).subscribe((tipo: ITipo) => {
+          anuncio.tipo = tipo;
+        });
+        // Get Municipio Anuncio
+        this.anuncioService.getMunicipioAnuncio(anuncio.id).subscribe((municipio: IMunicipio) => {
+          anuncio.municipio = municipio;
+        });
+        // Get Provincia Anuncio
+        this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IGeneral) => {
+          anuncio.provincia = provincia;
+        });
+        // Get Vendedor Anuncio
+        this.anuncioService.getVendedorAnuncio(anuncio.id).subscribe((vendedor: IGeneral) => {
+          anuncio.vendedor = vendedor;
+        });
+      }
+
+      this.anuncios = anuncios;
+    });
+  }
+
+  openDialogDeleteAd() {
+
+  }
+
+  deleteAnuncio(id: number) {
+    this.anuncioService.deleteAnuncio(id).subscribe(() => {
+      this.getAnuncios();
+      this._snackBar.open("Anuncio eliminado", "Cerrar", {
+        duration: 5000,
+        horizontalPosition: 'left',
+        verticalPosition: 'bottom'
+      });
+    });
+  }
+
+  deleteFav(id: number) {
+    this.usuariosService.deleteFavorito(id).subscribe(() => {
+      this.getFavs();
+      this._snackBar.open("Favorito eliminado", "Cerrar", {
+        duration: 5000,
+        horizontalPosition: 'left',
+        verticalPosition: 'bottom'
+      });
+    });
+  }
+
+  scrollFavRight() {
+    document.getElementById('listFav')!.scrollLeft += 275;
+  }
+
+  scrollFavLeft() {
+    document.getElementById('listFav')!.scrollLeft -= 275;
+  }
+
+  scrollAdRight() {
+    document.getElementById('listAd')!.scrollLeft += 275;
+  }
+
+  scrollAdLeft() {
+    document.getElementById('listAd')!.scrollLeft -= 275;
   }
 
 }

@@ -1,0 +1,32 @@
+.image-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.image-upload>input {
+    display: none;
+}
+
+.image-upload i {
+    font-size: 4em;
+}
+
+.image-label:hover {
+    cursor: pointer;
+}
+
+.image-label {
+    background-color: lightgray;
+    border-radius: 1em;
+    padding: 1%;
+    border: 1px dashed black;
+}
+
+.listImages {
+    height: 100px;
+}
+
+.prov {
+    background-color: #F5F5F5;
+}

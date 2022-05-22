@@ -28,6 +28,11 @@
   "form.errorLogin": "Error en el login",
   "profile.change" : "Canviar",
   "profile.remove" : "Eliminar",
+  "profile.yourAds" : "Els teus anuncis",
+  "profile.yourFavs" : "Favorits",
+  "profile.removeFav" : "Eliminar favorit",
+  "profile.removeAd" : "Eliminar anunci",
+  "profile.editAd" : "Editar anunci",
   "home.selectProv" : "Escull província",
   "home.selectMun" : "Escull municipi",
   "home.search" : "Cerca",
@@ -59,9 +64,12 @@
   "adlist.floor" : "Pis",
   "adlist.house" : "Casa",
   "adlist.for" : "en",
+  "adlist.viewFilterBtn" : "Mostrar filtres",
+  "adlist.hideFilterBtn" : "Ocultar filtres",
   "ad.contact" : "Contactar",
   "ad.msg" : "Contacta amb el venedor",
   "ad.msgph" : "Estic interessat en...",
   "ad.in" : "en",
-  "ad.rooms" : "habs."
+  "ad.rooms" : "habs.",
+  "ad.return" : "Tornar"
 }

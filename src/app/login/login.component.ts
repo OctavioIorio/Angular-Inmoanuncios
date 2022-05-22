@@ -60,11 +60,11 @@ export class LoginComponent implements OnInit {
     var password = this.loginForm.get('password');
 
     if (nickname) formData.append("nickname", nickname.value);
-    if (password) formData.append("password", password.value);
+    if (password) formData.append("password", btoa(password.value));
 
     for (let i = 0; i < this.usuArray.length; i++) {
       const elem = this.usuArray[i];
-      if (nickname?.value == elem.nickname && password?.value == elem.password) {
+      if (nickname?.value == elem.nickname && btoa(password?.value) == elem.password) {
         this.app.saveCookie(elem.id);
         this.route.navigate(['/home'])
           .then(() => {

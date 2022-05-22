@@ -29,6 +29,7 @@ import { Cloudinary } from 'cloudinary-core';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
 import { MatTableModule } from '@angular/material/table';
+import { AdEditComponent } from './ad-edit/ad-edit.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatTableModule } from '@angular/material/table';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    AdminComponent
+    AdminComponent,
+    AdEditComponent
   ],
   imports: [
     BrowserModule,

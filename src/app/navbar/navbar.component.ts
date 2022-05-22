@@ -28,7 +28,6 @@ export class NavbarComponent implements OnInit {
 
   public lng = this.lngs[0];
 
-
   constructor(public app: AppComponent, private route: Router, public _location: Location, public translate: TranslateService, private usuariosService: UsuariosService, public dialog: MatDialog) {
     translate.addLangs(['en', 'es', 'ca']);
     translate.setDefaultLang('es');
@@ -40,7 +39,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.valor_cookie = this.app.getCookie();
-    console.log("Valor cookie: " + this.valor_cookie);
     this.getDatosUsuarios(this.valor_cookie);
   }
 
@@ -48,7 +46,6 @@ export class NavbarComponent implements OnInit {
     this.usuariosService.getUsuarioGenConcreto(id).subscribe((usuarioGen: IGeneral) => {
       this.info = usuarioGen;
       this.name = usuarioGen.nombre;
-      console.log(this.info);
     }, (error) => {
       this.errorMessage = error.message;
     });
@@ -56,7 +53,7 @@ export class NavbarComponent implements OnInit {
 
   signOut() {
     this.app.removeCookie();
-    this.route.navigate(['/home'])
+    this.route.navigate(['home'])
       .then(() => {
         window.location.reload();
       });
@@ -67,11 +64,6 @@ export class NavbarComponent implements OnInit {
       width: '1080px',
       data: { user: this.app.getCookie() },
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   // this.animal = result;
-    // });
   }
 
 }

@@ -11,6 +11,7 @@ import { IGeneral } from '../interfaces/igeneral';
 
 import { DataAnunciosService } from '../services/data-anuncios.service';
 import { DataTiposService } from '../services/data-tipos.service';
+import { IAnuncioImagen } from '../interfaces/ianuncioimagen';
 
 @Component({
   selector: 'app-ad-list',
@@ -29,6 +30,7 @@ export class AdListComponent implements OnInit {
     { nombre: 'adlist.rent', valor: 'Alquiler' },
     { nombre: 'adlist.sale', valor: 'Venta' }
   ];
+  imgsAd: IAnuncioImagen[] = [];
 
   // Filter anuncios
   tipoSelected: number = 0;
@@ -39,6 +41,8 @@ export class AdListComponent implements OnInit {
   areaMax: number = 0;
   tratoSelected: string = "";
   habitaciones: number = 0;
+
+  img: string = "";
 
   constructor(private anuncioService: DataAnunciosService, private tipoService: DataTiposService, private route: Router, private aroute: ActivatedRoute) { }
 
@@ -62,6 +66,9 @@ export class AdListComponent implements OnInit {
           anuncio.vendedor = vendedor;
         });
         anuncio.descripcion = this.ellipsisDesc(anuncio.descripcion);
+        this.anuncioService.getImagenesAnuncio(anuncio.id).subscribe((imgs: IAnuncioImagen[]) => {
+          if (imgs.length > 0) anuncio.imagen = imgs[0].imagen.replace(/%2F/gm, "/");;
+        });
       }
       this.anuncios = anuncios.filter(anuncio => anuncio.municipio_id === this.mun_id);
       this.pageAnuncios = anuncios.filter(anuncio => anuncio.municipio_id === this.mun_id).slice(0, 10);
@@ -72,6 +79,15 @@ export class AdListComponent implements OnInit {
     this.tipoService.getData().subscribe((tipos: Array<ITipo>) => {
       this.tipos = tipos;
     });
+    // this.anuncioService.getImagenes().subscribe((imgsAd: IAnuncioImagen[]) => {
+    //   this.imgsAd = imgsAd;
+    // })
+  }
+
+  viewImagen(id: number) {
+    this.anuncioService.getImagenesAnuncio(id).subscribe((imgsAd: IAnuncioImagen[]) => {
+      this.img = imgsAd[0].imagen.replace(/\//gm, "%2F");
+    })
   }
 
   OnPageChange(event: PageEvent) {
@@ -89,6 +105,7 @@ export class AdListComponent implements OnInit {
     if (desc?.length > 150) {
       return desc.substring(0, 150) + '...';
     }
+
     return desc;
   };
 
@@ -99,6 +116,18 @@ export class AdListComponent implements OnInit {
       case "Alquiler": return "adlist.rent";
       case "Venta": return "adlist.sale";
       default: return "";
+    }
+  }
+
+  viewFilters() {
+    let filter = document.getElementById("filtros");
+    let viewFilter = document.getElementById("viewFilters");
+    if (filter!.style.display == "block") {
+      filter!.style.display = "none";
+      viewFilter!.textContent = "Mostrar filtros";
+    } else {
+      filter!.style.display = "block";
+      viewFilter!.textContent = "Ocultar filtros";
     }
   }
 

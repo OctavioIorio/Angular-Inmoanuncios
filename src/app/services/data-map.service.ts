@@ -23,8 +23,8 @@ export class DataMapService {
     return this._http.get<IMap>(`${url}?access_key=${apiKey}&query=${anuncio.calle}, ${anuncio.num}, ${anuncio.cp} Spain`);
   }
 
-  getMap2(): Observable<IMap> {
-    let url = 'http://api.positionstack.com/v1/forward', apiKey = '9461f1f9a3766f44b90bdffd4466830a';
-    return this._http.get<IMap>(`${url}?access_key=${apiKey}&query=Carrer del Camp de les Moreres, 14, 08401 Granollers, Barcelona`);
-  }
+  // getMap(anuncio: IAnuncio): Observable<IMap> {
+  //   let url = 'http://api.positionstack.com/v1/forward', apiKey = '9461f1f9a3766f44b90bdffd4466830a';//Carrer Camp de les moreres, 14, 08401
+  //   return this._http.get<IMap>(`https://nominatim.openstreetmap.org/?addressdetails=1&q=${anuncio.calle}${anuncio.num}${anuncio.cp}&format=json&limit=1`);
+  // }
 }
