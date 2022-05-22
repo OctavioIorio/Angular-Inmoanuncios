@@ -1,63 +1,61 @@
 <div class="Navbar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand me-auto" [routerLink]="['home']"><img src="assets/yospace-logo.svg"
-                    class="img-fluid logo" width="50px" alt="logo-footer" /><span class="mt-1">Inmoanuncios</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2">
-                    <!-- <li class="nav-item">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" [routerLink]="['home']"><img src="assets/yospace-logo.svg" class="img-fluid logo"
+          width="50px" alt="logo-footer" /><span class="mt-1">Inmoanuncios</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2">
+          <!-- <li class="nav-item">
                         <a class="nav-link" [routerLink]="['home']">Home</a>
                     </li> -->
-                    <!-- EMPIEZA IF -->
-                    <ng-template [ngIf]="valor_cookie == ''" [ngIfElse]="loggedOut">
-                        <li class="nav-item me-md-2">
-                            <a class="nav-link" [routerLink]="['login']">{{'navbar.signin' | translate}}</a>
-                        </li>
-                    </ng-template>
+          <!-- EMPIEZA IF -->
+          <ng-template [ngIf]="cookies == false" [ngIfElse]="loggedIn">
+            <li class="nav-item me-md-2">
+              <a class="nav-link" [routerLink]="['login']">{{'navbar.signin' | translate}}</a>
+            </li>
+          </ng-template>
 
-                    <ng-template #loggedOut>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['ad-form']">{{'navbar.publish' | translate}}</a>
-                        </li> -->
-                        <li><button class="border" mat-button (click)="openDialog()">{{'navbar.publish' | translate}} <i
-                                    class="fa-solid fa-location-dot"></i></button></li>
-                        <li class="nav-item me-md-2">
-                            <a mat-button class="nav-link" [routerLink]="['home']"
-                                (click)="signOut()">{{'navbar.signout' |
-                                translate}}</a>
-                        </li>
-                        <li class="nav-item me-md-2">
-                            <a mat-button class="nav-link" [routerLink]="['profile']">{{'navbar.profile' |
-                                translate}}</a>
-                        </li>
-                    </ng-template>
-                    <!-- ACABA IF -->
+          <ng-template #loggedIn>
+            <ng-template [ngIf]="admin == false" [ngIfElse]="AdminIn">
+              <li><button class="border" mat-button (click)="openDialog()">{{'navbar.publish' | translate}} <i
+                    class="fa-solid fa-location-dot"></i></button></li>
+              <li class="nav-item me-md-2">
+                <a mat-button class="nav-link" [routerLink]="['home']" (click)="signOut()">{{'navbar.signout' |
+                  translate}}</a>
+              </li>
+              <li class="nav-item me-md-2">
+                <a mat-button class="nav-link" [routerLink]="['profile']">{{'navbar.profile' |
+                  translate}}</a>
+              </li>
+            </ng-template>
+            <ng-template #AdminIn>
+              <li class="nav-item me-md-2">
+                <a class="nav-link" [routerLink]="['admin']">{{'navbar.admin' | translate}}</a>
+              </li>
+              <li class="nav-item me-md-2">
+                <a mat-button class="nav-link" [routerLink]="['home']" (click)="signOutAdmin()">{{'navbar.signout' |
+                  translate}}</a>
+              </li>
+            </ng-template>
+          </ng-template>
+          <!-- ACABA IF -->
 
-                    <!-- EMPIEZA IF -->
-                    <ng-template [ngIf]="name == 'admin'">
-                        <li class="nav-item me-md-2">
-                            <a class="nav-link" [routerLink]="['admin']">{{'navbar.admin' | translate}}</a>
-                        </li>
-                    </ng-template>
-                    <!-- ACABA IF -->
-
-                    <li class="nav-item mt-1" class="d-flex align-items-center">
-                        <div appearance="fill" class="lngSelect">
-                            <mat-select [value]="lng.value" (selectionChange)="switchLang($event)">
-                                <mat-option class="lngOption" *ngFor="let lng of lngs" [value]="lng.value">
-                                    <img style="width:25px;height:20px;" src="{{lng.img}}" alt="{{lng.label}}-img">
-                                    {{lng.label}}
-                                </mat-option>
-                            </mat-select>
-                        </div>
-                    </li>
-                </ul>
+          <li class="nav-item mt-1" class="d-flex align-items-center">
+            <div appearance="fill" class="lngSelect">
+              <mat-select value="{{lng.value}}" id="select_lang" (selectionChange)="switchLang($event)">
+                <mat-option class="lngOption" *ngFor="let lng of lngs" [value]="lng.value">
+                  <img style="width:25px;height:20px;" src="{{lng.img}}" alt="{{lng.label}}-img">
+                  {{lng.label}}
+                </mat-option>
+              </mat-select>
             </div>
-        </div>
-    </nav>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>

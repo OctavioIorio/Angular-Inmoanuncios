@@ -27,6 +27,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "cloudinary-core": "^2.12.3",
     "ng-recaptcha": "^9.0.0",
+    "ng2-search-filter": "^0.5.1",
     "ngx-captcha": "^11.0.0",
     "ngx-cookie-service": "^13.2.0",
     "rxjs": "~7.4.0",

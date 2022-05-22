@@ -16,9 +16,12 @@ import { UsuariosService } from '../services/usuarios.service';
 export class NavbarComponent implements OnInit {
 
   valor_cookie: any;
+  valor_admin: any;
   info: any;
   errorMessage: any;
   name: any;
+  admin: boolean = false;
+  cookies: boolean = true;
 
   readonly lngs = [
     { value: 'es', label: 'Español', img: 'assets/es.png' },
@@ -39,13 +42,22 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.valor_cookie = this.app.getCookie();
-    this.getDatosUsuarios(this.valor_cookie);
+    this.valor_admin = this.app.getAdmin();
+
+    if (this.valor_cookie) {
+      this.getDatosUsuarios(this.valor_cookie);
+    } else if (this.valor_admin){
+      this.admin = true;
+    } else {
+      this.cookies = false;
+    }
+
   }
 
   getDatosUsuarios(id: number) {
     this.usuariosService.getUsuarioGenConcreto(id).subscribe((usuarioGen: IGeneral) => {
       this.info = usuarioGen;
-      this.name = usuarioGen.nombre;
+      //this.name = usuarioGen.nombre;
     }, (error) => {
       this.errorMessage = error.message;
     });
@@ -54,6 +66,14 @@ export class NavbarComponent implements OnInit {
   signOut() {
     this.app.removeCookie();
     this.route.navigate(['home'])
+      .then(() => {
+        window.location.reload();
+      });
+  }
+
+  signOutAdmin() {
+    this.app.removeAdmin();
+    this.route.navigate(['/home'])
       .then(() => {
         window.location.reload();
       });

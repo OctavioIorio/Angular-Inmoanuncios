@@ -68,12 +68,11 @@ export class AdComponent implements OnInit {
       });
       // Get Imagenes Anuncio
       this.anuncioService.getImagenesAnuncio(anuncio.id).subscribe((imgs: IAnuncioImagen[]) => {
-        this.imgs = imgs;
+        if (imgs.length > 0) this.imgs = imgs;
       });
 
       // Maps
       this.mapService.getMap(anuncio).subscribe((map: IMap) => {
-        console.log(map);
         this.latLng = {
           lat: map.data[0].latitude,
           lng: map.data[0].longitude,
@@ -123,7 +122,8 @@ export class AdComponent implements OnInit {
     }
 
     if (this.msgContacto.length > 0) {
-      const dataContacto: Object = { msg: this.msgContacto, idComprador: this.app.getCookie(), idAnuncio: this.anuncio?.id, url: window.location.href, imagen: this.imgs[0].imagen };
+      let imgAd = this.imgs ? this.imgs[0]?.imagen : "https://res.cloudinary.com/inmoanuncios/image/upload/v1653229770/anuncios/casa_ekdkrm.png";
+      const dataContacto: Object = { msg: this.msgContacto, idComprador: this.app.getCookie(), idAnuncio: this.anuncio?.id, url: window.location.href, imagen: imgAd };
       this.anuncioService.contactarVendedor(dataContacto).subscribe({
         error: (error) => { this.errorMessage = error.message; }
       });

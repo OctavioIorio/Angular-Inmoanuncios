@@ -15,6 +15,7 @@ import { IAnuncioImagen } from '../interfaces/ianuncioimagen';
 import { MatDialog } from '@angular/material/dialog';
 import { AdEditComponent } from '../ad-edit/ad-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogoConfirmacionComponent } from '../dialogo-confirmacion/dialogo-confirmacion.component';
 
 @Component({
   selector: 'app-profile',
@@ -75,8 +76,6 @@ export class ProfileComponent implements OnInit {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.imagen_valor = file;
-      console.log(file);
-      console.log("INFO: " + this.imagen_valor);
       this.editProfileForm.get('imagen')?.setValue(file);
       this.onUpload();
     }
@@ -99,10 +98,9 @@ export class ProfileComponent implements OnInit {
     }
 
     if (this.imagen_valor) {
-      console.log("Se ejecuta onupload");
       this.onUpload();
     } else {
-      this.restainfo();
+      this.subscribeEditInfo();
     }
 
   }
@@ -116,16 +114,14 @@ export class ProfileComponent implements OnInit {
 
     this._uploadService.uploadImage(data).subscribe(res => {
       this.info = res;
-      console.log(this.info);
-      this.restainfo();
+      this.subscribeEditInfo();
     });
+
   }
 
-  restainfo() {
-
+  subscribeEditInfo() {
 
     var url_upload = this.info.secure_url;
-    console.log(url_upload);
 
     const formData = new FormData();
 
@@ -148,15 +144,10 @@ export class ProfileComponent implements OnInit {
       formData.append("imagen", imagen?.value);
     }
 
-    formData.forEach((value, key) => {
-      console.log(key + " " + value)
-    });
-
     this.missatge = `Usuari modificat correctament`;
     this.editProfileForm.reset();
     this.usuariosService.editUsuarioGenConcreto(this.valor_cookie, formData).subscribe({
       next: (x) => {
-        alert(this.missatge);
         window.location.reload();
       },
       error: (error) => {
@@ -296,8 +287,19 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  openDialogDeleteAd() {
-
+  openDialogDeleteAd(id: number) {
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        data: `¿Seguro que quieres borrar este anuncio?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          this.deleteAnuncio(id);
+        } else {
+          return;
+        }
+      });
   }
 
   deleteAnuncio(id: number) {

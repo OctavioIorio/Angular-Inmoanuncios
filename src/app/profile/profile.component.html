@@ -97,7 +97,7 @@
           <p>{{tipoTrans(fav.anuncio?.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
             {{tipoTrans(fav.anuncio?.trato) |
             translate}}</p>
-          <p><span *ngIf="fav.anuncio?.cp">{{fav.anuncio?.cp}},
+          <p class="direccion"><span *ngIf="fav.anuncio?.cp">{{fav.anuncio?.cp}},
             </span>{{fav.anuncio?.municipio?.nombre}},
             {{fav.anuncio?.provincia?.nombre}}</p>
           <p class="precio"><span>{{fav.anuncio?.precio}}</span> €</p>
@@ -125,7 +125,7 @@
             <button class="editBtn mt-1" matTooltip="{{'profile.editAd' | translate}}" matTooltipPosition="right"
               (click)="openDialogEdit(anuncio);"><i class="fa-regular fa-pen-to-square"></i></button>
             <button class="delBtn" matTooltip="{{'profile.removeAd' | translate}}" matTooltipPosition="right"
-              (click)="deleteAnuncio(anuncio.id);"><i class="fa fa-trash"></i></button>
+              (click)="openDialogDeleteAd(anuncio.id);"><i class="fa fa-trash"></i></button>
           </div>
           <div class="textoImg">
             {{anuncio.referencia}}
@@ -135,7 +135,7 @@
           <p>{{tipoTrans(anuncio.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
             {{tipoTrans(anuncio.trato) |
             translate}}</p>
-          <p><span *ngIf="anuncio.cp">{{anuncio?.cp}},
+          <p class="direccion"><span *ngIf="anuncio.cp">{{anuncio?.cp}},
             </span>{{anuncio.municipio?.nombre}},
             {{anuncio?.provincia?.nombre}}</p>
           <p class="precio"><span>{{anuncio.precio}}</span> €</p>

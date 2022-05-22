@@ -30,6 +30,15 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
 import { MatTableModule } from '@angular/material/table';
 import { AdEditComponent } from './ad-edit/ad-edit.component';
+import { DialogoConfirmacionComponent } from './dialogo-confirmacion/dialogo-confirmacion.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { UsuariosService } from './services/usuarios.service';
+import { DialogEditProfileComponent } from './dialog-edit-profile/dialog-edit-profile.component';
+import { FooterComponent } from './footer/footer.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { TerminosComponent } from './terminos/terminos.component';
+import { CookieComponent } from './cookie/cookie.component';
+import { LegalComponent } from './legal/legal.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +53,13 @@ import { AdEditComponent } from './ad-edit/ad-edit.component';
     RegisterComponent,
     ProfileComponent,
     AdminComponent,
-    AdEditComponent
+    AdEditComponent,
+    DialogoConfirmacionComponent,
+    DialogEditProfileComponent,
+    FooterComponent,
+    TerminosComponent,
+    CookieComponent,
+    LegalComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +75,7 @@ import { AdEditComponent } from './ad-edit/ad-edit.component';
     RecaptchaModule,
     MatTableModule,
     RecaptchaFormsModule,
+    MatDialogModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -69,6 +85,7 @@ import { AdEditComponent } from './ad-edit/ad-edit.component';
     }),
     CloudinaryModule,
     CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'inmoanuncios' } as CloudinaryConfiguration),
+    Ng2SearchPipeModule
   ],
   providers: [
     DataAnunciosService,
@@ -78,7 +95,8 @@ import { AdEditComponent } from './ad-edit/ad-edit.component';
         siteKey: environment.recaptcha.siteKey,
       } as RecaptchaSettings,
     },
-    CookieService
+    CookieService,
+    UsuariosService
   ],
   bootstrap: [AppComponent]
 })

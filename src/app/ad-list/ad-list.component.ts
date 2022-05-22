@@ -58,7 +58,7 @@ export class AdListComponent implements OnInit {
           anuncio.municipio = municipio;
         });
         // Get Provincia Anuncio
-        this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IGeneral) => {
+        this.anuncioService.getProvinciaAnuncio(anuncio.id).subscribe((provincia: IProvincia) => {
           anuncio.provincia = provincia;
         });
         // Get Vendedor Anuncio

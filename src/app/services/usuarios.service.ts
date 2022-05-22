@@ -55,8 +55,8 @@ export class UsuariosService {
     return result;
   }
 
-  deleteFavorito(id:number): Observable<any> {
-    return this._http.delete(`${this.apiUrl}/api/favorito/`+ id);
+  deleteFavorito(id: number): Observable<any> {
+    return this._http.delete(`${this.apiUrl}/api/favorito/` + id);
   }
 
   getUsuarioFavorito(id: number): Observable<IGeneral> {
@@ -68,4 +68,9 @@ export class UsuariosService {
     let result = this._http.get<IAnuncio>(`${this.apiUrl}/api/favorito/anuncio/${id}`);
     return result;
   }
+  
+  public verificarAdmin(id: number): Observable<any> {
+    return this._http.get(`${this.apiUrl}/api/admin/` + id);
+  }
+
 }

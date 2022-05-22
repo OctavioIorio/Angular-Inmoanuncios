@@ -10,6 +10,15 @@
     min-height: 500px;
 }
 
+.no-img {
+    height: 500px;
+}
+
+.no-img > img {
+    object-fit: contain;
+    max-height: 500px;
+}
+
 .precio > span {
     font-weight: bold;
 }

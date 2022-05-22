@@ -1,21 +1,17 @@
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-2">
         <div class="col col-md-8" *ngIf="anuncio">
-            <!-- <img src="{{anuncio.imagen}}" onerror="this.src = 'assets/casa.png'" class="img-fluid w-100" alt="adImg-{{anuncio.referencia}}"> -->
-            <div id="carouselImg" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
+            <div *ngIf="imgs; else elseBlock" id="carouselImg" class="carousel slide"
+                data-bs-interval="false" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" *ngFor="let img of imgs; let first = first; let i = index;"
                         data-bs-target="#carouselImg" [attr.data-bs-slide-to]="i" [ngClass]="{ active: first }"
                         [attr.aria-current]="{true: first}" [attr.aria-label]="'Slide' + (i+1)"></button>
                 </div>
                 <div class="carousel-inner">
-                    <!-- <div class="carousel-item active">
-                        <img src="https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?cs=srgb&dl=pexels-pixabay-60597.jpg&fm=jpg"
-                            class="d-block w-100" alt="...">
-                    </div> -->
                     <div class="carousel-item" *ngFor="let img of imgs; let first = first;"
                         [ngClass]="{ active: first }">
-                        <img src="{{viewImage(img.imagen)}}" class="d-block w-100" alt="...">
+                        <img src="{{viewImage(img.imagen)}}" class="d-block w-100" alt="adImg-{{anuncio.referencia}}">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselImg" data-bs-slide="prev">
@@ -27,6 +23,11 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+            <ng-template #elseBlock>
+                <div class="no-img">
+                    <img src="assets/casa.png" class="d-block w-100" alt="adImg-{{anuncio.referencia}}">
+                </div>
+            </ng-template>
             <span class="d-flex justify-content-between">
                 <h1>{{tipoTrans(anuncio.tipo?.nombre) | translate}} {{'adlist.for' | translate}}
                     {{tipoTrans(anuncio.trato) |
@@ -71,7 +72,8 @@
                         type="submit">{{'ad.contact' | translate}}</button>
                 </div>
             </div>
-            <a class="my-2" mat-raised-button [routerLink]="['/ad-list/'+this.anuncio?.municipio_id]">{{'ad.return' | translate}}</a>
+            <a class="my-2" mat-raised-button [routerLink]="['/ad-list/'+this.anuncio?.municipio_id]">{{'ad.return' |
+                translate}}</a>
         </div>
     </div>
 </div>

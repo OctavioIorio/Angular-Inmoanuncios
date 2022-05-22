@@ -67,10 +67,6 @@ export class HomeComponent implements OnInit {
       cc.touched);
   }
 
-  con() {
-    console.log(this.myForm.get('municipio_id')?.value.id);
-  }
-
   onSubmit() {
     if (!this.myForm.valid) {
       return;

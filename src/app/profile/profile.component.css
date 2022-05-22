@@ -17,7 +17,6 @@
 
 .listFav {
   overflow-x: scroll;
-  /* max-height: 25vh; */
   background-color: #e4e4e4;
   scroll-behavior: smooth;
 }
@@ -124,4 +123,11 @@ h2 {
   width: 200px;
   height: 200px;
   object-fit: cover;
+}
+
+.direccion {
+  max-width: 259px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
